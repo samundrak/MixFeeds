@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration {
 				$table->string('password', 60);
 				$table->rememberToken();
 				$table->boolean('is_admin')->default(0);
+				$table->double('balance')->default(0.0);
+				$table->boolean('is_active')->default(0);
 				$table->timestamps();
 			});
 		}

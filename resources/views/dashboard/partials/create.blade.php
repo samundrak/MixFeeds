@@ -87,7 +87,6 @@
 		</form>
 	</div>
 </div>
-<script src="js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 	$('#responsive-checkbox').removeAttr('checked');

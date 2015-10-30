@@ -24,7 +24,7 @@
 							<a ui-sref="dashboard({page:'settings'})">Settings</a>
 						</li>
 						</li><li ui-sref-active="active">
-							<a ui-sref="dashboard({page:'widgets'})">Widgets</a>
+							<a ui-sref="widgets">Widgets</a>
 						</li>
 						<li href-active="active">
 

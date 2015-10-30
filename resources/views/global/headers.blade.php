@@ -16,4 +16,7 @@
 	<script type="text/javascript" src="/javascript/lib/angular-loading-bar.js"></script>
 	<script type="text/javascript" src="/javascript/lib/angular-ui-router.min.js"></script>
 	<script type="text/javascript" src="/javascript/src/app.js"></script>
+	<script type="text/javascript" src="/javascript/src/configs.js"></script>
+	<script type="text/javascript" src="/javascript/src/directives.js"></script>
+	<script type="text/javascript" src="/javascript/src/services.js"></script>
 	</head>

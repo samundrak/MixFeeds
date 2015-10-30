@@ -26,6 +26,9 @@
 						</li>
 						@if (Auth::check())
 						<li ui-sref-active="active">
+							<a href="/dashboard/home">Dashboard</a>
+						</li>
+						<li ui-sref-active="active">
 							<a href="/logout">Logout</a>
 						</li>
 						@else

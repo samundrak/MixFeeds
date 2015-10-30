@@ -19,7 +19,7 @@ Account Details</li>
 </li>
 
 <li class="list-group-item">
-	Buy now
+	<img src="/img/pp.gif" class="img-responsive"/>
 </li>
 </ul>
 </ui-view>
