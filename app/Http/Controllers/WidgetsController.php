@@ -77,8 +77,10 @@ class WidgetsController extends Controller {
 			"settings" => $settings,
 			"created_at" => \Carbon\Carbon::now(),
 			"updated_at" => \Carbon\Carbon::now(),
+
 		);
 		if ($request->input('state') === 'widgets.create') {
+			$val['token'] = md5(time() . Auth::user()->id);
 			$id = DB::table('widgets')
 				->insertGetId($vals);
 

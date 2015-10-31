@@ -16,8 +16,10 @@ class CreateWidgetsTable extends Migration {
 			$table->increments('id');
 			$table->integer('creator');
 			$table->string('widget_name');
-			$table->string('page_name');
+			$table->string('pages');
 			$table->string('domain');
+			$table->string('settings');
+			$table->string('token');
 			$table->timestamps();
 		});
 	}
