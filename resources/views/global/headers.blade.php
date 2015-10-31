@@ -15,6 +15,8 @@
 	<script type="text/javascript" src="/javascript/lib/angular-animate.js"></script>
 	<script type="text/javascript" src="/javascript/lib/angular-loading-bar.js"></script>
 	<script type="text/javascript" src="/javascript/lib/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="/javascript/lib/angular-messages.js"></script>
+	<script type="text/javascript" src="/javascript/lib/angular-sanitize.js"></script>
 	<script type="text/javascript" src="/javascript/src/app.js"></script>
 	<script type="text/javascript" src="/javascript/src/configs.js"></script>
 	<script type="text/javascript" src="/javascript/src/directives.js"></script>

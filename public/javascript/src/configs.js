@@ -66,8 +66,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 .state('widgets.create', {
                     url: '/create',
                     templateUrl: '/views/dashboard/partials/create',
-                    controller: 'widgetsCreateCtrl'
+                    controller: 'widgetsCreateEditCtrl'
 
+                })
+                .state('widgets.edit',{
+                    url : '/edit/{id}',
+                    templateUrl: '/views/dashboard/partials/create',
+                    controller: 'widgetsCreateEditCtrl'
                 })
                 .state('dashboard', {
                     url: '/:page',

@@ -19,10 +19,11 @@
 			<br/>
 			<label>Domain: </label> @{{ widget.domain}}
 			<br/>
-			<label>Page: </label> @{{ widget.page_name}}
+			<label>Page: </label>
+			<span ng-bind-html="widget.pages | arr2str:'link'"></span>
 			<br/>
 			<div class="btn-group" role="group" aria-label="...">
-				<button type="button" class="btn btn-default">Edit</button>
+				<button ui-sref="widgets.edit({id:widget.id})" type="button" class="btn btn-default">Edit</button>
 				<button type="button" class="btn btn-default">Preview</button>
 				<button type="button" class="btn btn-default">Get Code</button>
 				<button type="button" ng-click="deleteWidget($index)" class="btn btn-default">Delete</button>

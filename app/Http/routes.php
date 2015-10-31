@@ -13,7 +13,4 @@
 |
  */
 
-require_once 'routes/views.php';
-require_once 'routes/widgets.php';
-require_once 'routes/users.php';
-require_once 'routes/fb.php';
+require_once 'routes/index.php';

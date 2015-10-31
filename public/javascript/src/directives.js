@@ -1,30 +1,40 @@
 app.directive('responseMessages', [
 
-        function() {
-            return {
-                restrict: 'EA',
-                scope: {
-                    messages: "=messages"
-                },
-                template: " {{ data }}",
-                link: function(scope, iElement, iAttrs) {
-                    if (typeof scope.messages === 'string') {
-                        var icon = '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>';
-                        iElement.html('<div class="alert alert-success"> ' + icon + ' ' + scope.messages + '</div>');
-                    } else {
-                        var data = '';
-                        scope.messages.forEach(function(post) {
-                            var icon = '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>';
-                            data = data + '<div class="alert alert-danger"> ' + icon + ' ' + post + '</div>';
-                        });
-                        iElement.html(data);
-                    }
+    function() {
+        return {
+            restrict: 'EA',
+            scope: {
+                messages: "=messages",
+                info: "@info"
+            },
+            template: " {{ data }}",
+            link: function(scope, iElement, iAttrs) {
+                var message = scope.messages || scope.info;
+                if (typeof message === 'string') {
+                    var icon = '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>';
+                    iElement.html('<div class="alert alert-success"> ' + icon + ' ' + message + '</div>');
+                } else {
+                    var data = '<div class="alert alert-danger"> ';
+                    message.forEach(function(post) {
+                        var icon = '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>';
+                        data = data + '<div > ' + icon + ' ' + post + '</div>';
+                    });
+                    data += '</div>'
+                    iElement.html(data);
+                }
 
-                },
-                controller: function($scope) {}
-            };
-        }
-    ])
+            },
+            controller: function($scope) {
+
+                (function(selector, delay) {
+                    window.setTimeout(function() {
+                        $(selector).hide(100);
+                    }, delay);
+                })('response-messages', '5000');
+            }
+        };
+    }
+])
     .directive('pagination', ['$compile', '$rootScope',
 
         function($compile, $rootScope) {
