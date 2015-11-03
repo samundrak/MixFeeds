@@ -80,7 +80,7 @@ class WidgetsController extends Controller {
 
 		);
 		if ($request->input('state') === 'widgets.create') {
-			$val['token'] = md5(time() . Auth::user()->id);
+			$vals['token'] = md5(time() . Auth::user()->id);
 			$id = DB::table('widgets')
 				->insertGetId($vals);
 
@@ -108,7 +108,7 @@ class WidgetsController extends Controller {
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  Request  $request
+	 * @param  Request  $equest
 	 * @return Response
 	 */
 	public function store(Request $request) {

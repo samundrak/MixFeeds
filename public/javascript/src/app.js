@@ -79,6 +79,31 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
             });
         }
 
+
+        $scope.getCode = function(id,preview) {
+         $scope.preview = preview || false;
+            if (!id) return;
+
+            $http.get('/api/widgets/get/' + id).then(function(report) {
+                if (report.data.success) {
+                    var res = report.data.data;
+                    var size = JSON.parse(JSON.parse(res.settings).size);
+
+                    var w = size.responsive ? 'auto' : size.width;
+                    var h = size.responsive ? 'auto' : size.height;
+
+                    var code = '<iframe style="border:0px;background:black;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    $scope.code = code;
+                    $("#codeView").modal();
+                    $("#me").html(code);
+                } else {
+                    $scope.response_message = [report.data.message];
+                }
+            }, function(error) {
+                $scope.response_message = ['Error on network connection'];
+            });
+        }
+
         function loadWidgets(data) {
             var path = '/api/widgets/get';
             if (data) path = '/api/widgets/get?dest=' + data.desc;
@@ -137,7 +162,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 if ($state.current.name === 'widgets.edit') {
                     data.widget_id = $stateParams.id;
                 }
-                 
+
                 $http.post('/api/widgets/create', data).then(function(report) {
                     console.log(report);
                     if (!report.data.success) {
@@ -150,8 +175,8 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                                 });
                             }
 
-                        }else{
-                            msg =  [report.data.message];
+                        } else {
+                            msg = [report.data.message];
                         }
 
                         return $scope.widget.alert.message = msg;
@@ -198,3 +223,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
             }
         }
     ])
+
+.controller('subscriptionsCtrl', ['$scope','$http', function ($scope,$http) {
+    
+}])

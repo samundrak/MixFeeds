@@ -4,8 +4,8 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Widgets extends Model {
+class Subscriptions extends Model {
 	//
-	protected $table = 'widgets';
+	protected $table = 'subscription';
 
 }

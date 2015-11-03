@@ -4,6 +4,9 @@
 <a ui-sref="dashboard({page:'account'})">Balance</a>
 </li>
 <li class="list-group-item">
+<a ui-sref="account.subscriptions">Subscriptions</a>
+</li>
+<li class="list-group-item">
 <a ui-sref="account.transaction">Transaction</a>
 </li>
 </ul>
@@ -19,7 +22,7 @@ Account Details</li>
 </li>
 
 <li class="list-group-item">
-	<img src="/img/pp.gif" class="img-responsive"/>
+	<img src="/public/img/pp.gif" class="img-responsive"/>
 </li>
 </ul>
 </ui-view>

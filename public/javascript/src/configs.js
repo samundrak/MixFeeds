@@ -57,6 +57,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     templateUrl: '/views/dashboard/partials/transaction',
                     controller: 'dashboardCtrl'
                 })
+                .state('account.subscriptions', {
+                    url: '/subscriptions',
+                    templateUrl: '/views/dashboard/partials/subscriptions',
+                    controller: 'subscriptionsCtrl'
+                })
                 .state('widgets', {
                     url: '/widgets',
                     templateUrl: '/views/dashboard/partials/widgets',

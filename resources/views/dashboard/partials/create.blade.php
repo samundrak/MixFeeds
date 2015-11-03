@@ -86,7 +86,7 @@
 					<div class="row-group margin-top-30">
 						<label>.</label>
 						<div class="fb-page-box-1">
-							<input  class="getcode" type="submit" value="Get Code">
+							<input  class="getcode" type="submit" value="Save">
 						</div>
 					</div>
 				</form>

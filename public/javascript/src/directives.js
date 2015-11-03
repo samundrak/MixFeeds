@@ -76,3 +76,14 @@ app.directive('responseMessages', [
             };
         }
     ])
+.directive('displayWidget', ['$compile',function ($compile) {
+    return {
+        scope :{
+            code : "=code"
+        },
+        restrict: 'EA',
+        link: function (scope, element, iAttrs) {
+            $compile(element.html(scope.code).contents())(scope);
+        }
+    };
+}])
