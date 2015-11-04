@@ -11,10 +11,15 @@ app.filter('arr2str', function() {
     };
 })
 
-.service('notify', ['$rootScope',
-    function($rootScope) {
+.service('notify', ['$rootScope', '$timeout',
+    function($rootScope, $timeout) {
         return function(params) {
+            delete $rootScope.notification;
             $rootScope.notification = params;
+            $timeout(function() {
+                if ($rootScope.notification) delete $rootScope.notification;
+                $rootScope.$apply();
+            }, 2000);
         }
     }
 ])

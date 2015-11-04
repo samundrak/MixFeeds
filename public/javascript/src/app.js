@@ -66,8 +66,8 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
     }
 ])
 
-.controller('widgetsCtrl', ['$scope', '$http', '$rootScope','notify',
-    function($scope, $http, $rootScope,notify) {
+.controller('widgetsCtrl', ['$scope', '$http', '$rootScope', 'notify',
+    function($scope, $http, $rootScope, notify) {
         $scope.deleteWidget = function(item) {
             if (!confirm("Are you sure you want to delete this widget")) return;
             $scope.response_message = undefined;
@@ -81,7 +81,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     notify([report.data.message]);
                 }
             }, function(error) {
-               notify($global.error.network);
+                notify($global.error.network);
             });
         }
 
@@ -117,7 +117,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 if (report.data.success) {
                     $scope.widgets = report.data;
                 } else {
-                   notify(report.data.message);
+                    notify(report.data.message);
                 }
             }, function(error) {
                 notify($global.error.network);
@@ -132,8 +132,8 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
     }
 ])
-    .controller('widgetsCreateEditCtrl', ['$scope', '$http', '$stateParams', '$state','notify',
-        function($scope, $http, $stateParams, $state,notify) {
+    .controller('widgetsCreateEditCtrl', ['$scope', '$http', '$stateParams', '$state', 'notify',
+        function($scope, $http, $stateParams, $state, notify) {
             $scope.widget = {
                 alert: {},
                 settings: {
@@ -169,15 +169,15 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     if (!report.data.success) {
                         var msg = [];
                         // if ($state.current.name === 'widgets.create') {
-                            report.data.message = JSON.parse(report.data.message);
-                            for (var key in report.data.message) {
-                                report.data.message[key].forEach(function(post) {
-                                    msg.push(post);
-                                });
-                            }
+                        report.data.message = JSON.parse(report.data.message);
+                        for (var key in report.data.message) {
+                            report.data.message[key].forEach(function(post) {
+                                msg.push(post);
+                            });
+                        }
 
                         // } else {
-                            // msg = [report.data.message];
+                        // msg = [report.data.message];
                         // }
 
                         return notify(msg);
@@ -202,7 +202,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
                 function getSingleWidget() {
                     $http.get('/api/widgets/get/' + $scope.id).then(function(report) {
-                        
+
                         if (report.data.success) {
                             $scope.widget.alert.message = 'done';
                             $scope.widget = report.data.data;
@@ -213,7 +213,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                             $scope.widget.settings.size = JSON.parse($scope.widget.settings.size);
                             $scope.widget.settings.domain = $scope.widget.domain;
                         } else {
-                           notify(report.data.message);
+                            notify(report.data.message);
                         }
                     }, function(error) {
                         notify($global.error.network);
@@ -230,30 +230,51 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
         $scope.subscribe = {
             alert: {}
         }
-
-        $scope.getSubscriptionsPlans = function() {
+        $scope.plans = {};
+        var getSubscriptionsPlans = function() {
             $http.get('/api/subscribe/plans').then(function(report) {
+                    $scope.plans = report.data;
+                    if (!report.data.success)
+                        notify([report.data.message]);
+                },
+                function(error) {
+                    notify($global.error.network);
+                });
 
+        }
+
+        var getSubscriptionsDetails = function(data) {
+            var path = '/api/subscribe/details';
+            if (data) path = path + '?dest=' + data.desc;
+            $http.get(path).then(function(report) {
+                $scope.subscription = report.data;
+                if (!report.data.success)
+                    return notify(report.data.message);
             }, function(error) {
-
+                notify($global.error.network);
             });
         }
+
+        $scope.$on('paginationClicked', function(type, data) {
+            getSubscriptionsDetails({desc: data.clicked});
+        });
+        getSubscriptionsDetails();
+        getSubscriptionsPlans();
         $scope.subscribe = function(plan) {
             if (!plan) return true;
-            notify(plan);
-            var plans = ['simple', 'medium', 'super'];
-            if (plans.indexOf(plan) < 0) return true;
             var data = {
                 plan: plan
             }
             $http.post('/api/subscribe/create', data).then(function(report) {
-                // if (report.data.success) {
-                console.log(report.data);
-                // } else {
-                // $scope.subscribe.alert.message = report.data.message;
-                // }
+                if (report.data.success) {
+                    notify(report.data.message);
+                    $scope.amount -= report.data.data.amount;
+                    getSubscriptionsDetails();
+                } else {
+                    notify([report.data.message]);
+                }
             }, function(error) {
-                $scope.subscribe.alert.message = $global.error.network;
+                notify($global.error.network);
             });
         }
     }
