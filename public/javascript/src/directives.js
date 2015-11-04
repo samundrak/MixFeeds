@@ -24,13 +24,16 @@ app.directive('responseMessages', [
                 }
 
             },
-            controller: function($scope) {
+            controller: function($scope, $rootScope) {
 
                 (function(selector, delay) {
                     window.setTimeout(function() {
+                        delete $rootScope.notification;
                         $(selector).hide(100);
+                        $rootScope.$apply();
                     }, delay);
                 })('response-messages', '5000');
+                // $rootScope.notification = {};
             }
         };
     }
@@ -76,14 +79,16 @@ app.directive('responseMessages', [
             };
         }
     ])
-.directive('displayWidget', ['$compile',function ($compile) {
-    return {
-        scope :{
-            code : "=code"
-        },
-        restrict: 'EA',
-        link: function (scope, element, iAttrs) {
-            $compile(element.html(scope.code).contents())(scope);
+    .directive('displayWidget', ['$compile',
+        function($compile) {
+            return {
+                scope: {
+                    code: "=code"
+                },
+                restrict: 'EA',
+                link: function(scope, element, iAttrs) {
+                    $compile(element.html(scope.code).contents())(scope);
+                }
+            };
         }
-    };
-}])
+    ])

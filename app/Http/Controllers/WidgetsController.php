@@ -50,13 +50,14 @@ class WidgetsController extends Controller {
 			"pages" => "required",
 			"display" => "required",
 			"size" => "required",
-			"show_friends_face" => "required",
+			// "show_friends_face" => "required",
 			"show_small_header" => "required",
 			"hide_cover_photo" => "required",
 			"domain" => 'required|url',
 			"state" => 'required',
 		];
 		$validator = Validator::make(Input::all(), $validator);
+
 		if ($validator->fails()) {
 			return json_encode(["success" => 0, "message" => $validator->messages()->toJson()]);
 		}

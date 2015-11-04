@@ -1,7 +1,6 @@
 <?php
 
-use App\Model\Subscriptions;
-use App\Model\Transactions;
+use App\model\Plans;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
@@ -13,32 +12,31 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run() {
 		Model::unguard();
-		// $user = new User;
-		// $user->firstname = "Samundra";
-		// $user->lastname = "kc";
-		// $user->email = "samundrak@yahoo.com";
-		// $user->password = Hash::make('br0adlink');
-		// $user->save();
+		$plans = new Plans();
 
-		// $widgets = new Widgets;
-		// $widgets->creator = 3;
-		// $widgets->widget_name = uniqid();
-		// $widgets->page_name = " ['ncell', 'airtel', 'vodafone', 'lux']";
-		// $widgets->domain = "http://www.facebook.com";
-		// $widgets->save();
+		$plans->plan = 'simple';
+		$plans->amount = 10;
+		$plans->active = 1;
+		$plans->creator = 1;
+		$plans->validate = date("y-m-d");
+		$plans->save();
 
-		$transaction = new Transactions;
-		$transaction->user = Auth::user()->id;
-		$transaction->amount = 100;
-		$transaction->save();
+		$plans = new Plans();
+		$plans->plan = 'medium';
+		$plans->amount = '20';
+		$plans->active = 1;
+		$plans->creator = 1;
+		$plans->validate = date("y-m-d");
+		$plans->save();
 
-		$subscribe = new Subscriptions;
-		$subscribe->start = date();
-		$subscribe->end = date() + 30;
-		$subscribe->plan = 'simple';
-		$subscribe->amount = 10;
-		$subscribe->user = Auth::user()->id;
-		$subscribe->save();
+		$plans = new Plans();
+		$plans->plan = 'super';
+		$plans->amount = '30';
+		$plans->active = 1;
+		$plans->creator = 1;
+		$plans->validate = date("y-m-d");
+		$plans->save();
+
 		Model::reguard();
 	}
 }

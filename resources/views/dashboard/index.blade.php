@@ -45,6 +45,7 @@
 			</nav>
 			<div class="jumbotron">
 			<div class="row">
+			<response-messages ng-if="notification" messages="notification" ></response-messages>
 			<ui-view>
 					 <span  class="glyphicon glyphicon-refresh spinning"></span>
 

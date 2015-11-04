@@ -1,3 +1,9 @@
+var $global = {
+    error: {
+        network: ["Error on network connection"]
+    }
+}
+
 function getHomePartialsTemplate(path) {
     return "/views/home/partials/" + path;
 }
@@ -31,7 +37,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     $http.post('/api/user/update', $scope.dashboard.profile).then(function(report) {
                         if (report.data.success) {
                             console.log(report);
-                            $scope.dashboard.profile.alert.message = report.data.message;
+                            notify(report.data.message);
                             $scope.dashboard.profile.alert.type = 'success';
 
                         } else {
@@ -42,14 +48,14 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                                     msg.push(post);
                                 });
                             }
-                            $scope.dashboard.profile.alert.message = msg;
+                            notify(msg);
                             $scope.dashboard.profile.alert.type = 'danger';
 
                         }
                         return angular.element("#alerts").slideDown(500);
                     }, function(err) {
                         $scope.dashboard.profile.alert = {};
-                        $scope.dashboard.profile.alert.message = 'Error on internet connection';
+                        notify($global.error.network);
                         angular.element("#alerts").slideDown(500);
                         return $scope.dashboard.profile.alert.type = 'danger';
                     });
@@ -60,8 +66,8 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
     }
 ])
 
-.controller('widgetsCtrl', ['$scope', '$http', '$rootScope',
-    function($scope, $http, $rootScope) {
+.controller('widgetsCtrl', ['$scope', '$http', '$rootScope','notify',
+    function($scope, $http, $rootScope,notify) {
         $scope.deleteWidget = function(item) {
             if (!confirm("Are you sure you want to delete this widget")) return;
             $scope.response_message = undefined;
@@ -69,19 +75,19 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
             if (!$scope.widgets.data[item]) return;
             return $http.delete('/api/widgets/delete/' + $scope.widgets.data[item].id).then(function(report) {
                 if (report.data.success) {
-                    $scope.response_message = report.data.message;
+                    notify(report.data.message);
                     $scope.widgets.data.splice(item, 1);
                 } else {
-                    $scope.response_message = [report.data.message];
+                    notify([report.data.message]);
                 }
             }, function(error) {
-                $scope.response_message = [constant.error];
+               notify($global.error.network);
             });
         }
 
 
-        $scope.getCode = function(id,preview) {
-         $scope.preview = preview || false;
+        $scope.getCode = function(id, preview) {
+            $scope.preview = preview || false;
             if (!id) return;
 
             $http.get('/api/widgets/get/' + id).then(function(report) {
@@ -92,15 +98,15 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     var w = size.responsive ? 'auto' : size.width;
                     var h = size.responsive ? 'auto' : size.height;
 
-                    var code = '<iframe style="border:0px;background:black;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
                     $scope.code = code;
                     $("#codeView").modal();
                     $("#me").html(code);
                 } else {
-                    $scope.response_message = [report.data.message];
+                    notify([report.data.message]);
                 }
             }, function(error) {
-                $scope.response_message = ['Error on network connection'];
+                notify($global.error.network);
             });
         }
 
@@ -111,10 +117,10 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 if (report.data.success) {
                     $scope.widgets = report.data;
                 } else {
-                    $scope.response_message = report.data.message;
+                   notify(report.data.message);
                 }
             }, function(error) {
-                $scope.response_message = "Error on network connection";
+                notify($global.error.network);
             });
         }
         loadWidgets();
@@ -126,8 +132,8 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
     }
 ])
-    .controller('widgetsCreateEditCtrl', ['$scope', '$http', '$stateParams', '$state',
-        function($scope, $http, $stateParams, $state) {
+    .controller('widgetsCreateEditCtrl', ['$scope', '$http', '$stateParams', '$state','notify',
+        function($scope, $http, $stateParams, $state,notify) {
             $scope.widget = {
                 alert: {},
                 settings: {
@@ -148,12 +154,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 data.pages = $scope.widget.pages || null;
                 data.display = $scope.widget.settings.display || null;
                 data.size = $scope.widget.settings.size || null;
-                // if(!data.size.hasOwnProperty('responsive')){
-                //     if(!parseInt(data.size.width) || !parseInt(data.size.height)){
-                //         $scope.widget.alert.message = ["Widget size and height must be in number format"];
-                //         return alert($scope.widget.alert.message[0]);
-                //     }
-                // }
+
                 data.show_friends_face = $scope.widget.settings.show_friends_face || null;
                 data.show_small_header = $scope.widget.settings.show_small_header || null;
                 data.hide_cover_photo = $scope.widget.settings.hide_cover_photo || null;
@@ -167,7 +168,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     console.log(report);
                     if (!report.data.success) {
                         var msg = [];
-                        if ($state.current.name === 'widgets.create') {
+                        // if ($state.current.name === 'widgets.create') {
                             report.data.message = JSON.parse(report.data.message);
                             for (var key in report.data.message) {
                                 report.data.message[key].forEach(function(post) {
@@ -175,15 +176,15 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                                 });
                             }
 
-                        } else {
-                            msg = [report.data.message];
-                        }
+                        // } else {
+                            // msg = [report.data.message];
+                        // }
 
-                        return $scope.widget.alert.message = msg;
+                        return notify(msg);
                     }
-                    return $scope.widget.alert.message = report.data.message;
+                    return notify(report.data.message);
                 }, function(error) {
-                    $scope.widget.alert.message = ['Error on network connection'];
+                    notify($global.error.network);
                 });
             }
 
@@ -191,7 +192,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 $scope.id = $stateParams.id;
 
                 if (isNaN($scope.id) || !$scope.id) {
-                    $scope.widget.alert.message = ["Invalid id format, You will be redirected to home"];
+                    notify(["Invalid id format, You will be redirected to home"]);
                     window.setTimeout(function() {
                         $state.go('widgets');
                     }, 1000);
@@ -201,7 +202,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
                 function getSingleWidget() {
                     $http.get('/api/widgets/get/' + $scope.id).then(function(report) {
-                        console.log(report.data);
+                        
                         if (report.data.success) {
                             $scope.widget.alert.message = 'done';
                             $scope.widget = report.data.data;
@@ -212,10 +213,10 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                             $scope.widget.settings.size = JSON.parse($scope.widget.settings.size);
                             $scope.widget.settings.domain = $scope.widget.domain;
                         } else {
-                            $scope.widget.alert.message = [report.data.message];
+                           notify(report.data.message);
                         }
                     }, function(error) {
-                        $scope.widget.alert.message = ["Error on network connection"];
+                        notify($global.error.network);
                     })
                 }
                 getSingleWidget();
@@ -224,6 +225,36 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
         }
     ])
 
-.controller('subscriptionsCtrl', ['$scope','$http', function ($scope,$http) {
-    
-}])
+.controller('subscriptionsCtrl', ['$scope', '$http', 'notify',
+    function($scope, $http, notify) {
+        $scope.subscribe = {
+            alert: {}
+        }
+
+        $scope.getSubscriptionsPlans = function() {
+            $http.get('/api/subscribe/plans').then(function(report) {
+
+            }, function(error) {
+
+            });
+        }
+        $scope.subscribe = function(plan) {
+            if (!plan) return true;
+            notify(plan);
+            var plans = ['simple', 'medium', 'super'];
+            if (plans.indexOf(plan) < 0) return true;
+            var data = {
+                plan: plan
+            }
+            $http.post('/api/subscribe/create', data).then(function(report) {
+                // if (report.data.success) {
+                console.log(report.data);
+                // } else {
+                // $scope.subscribe.alert.message = report.data.message;
+                // }
+            }, function(error) {
+                $scope.subscribe.alert.message = $global.error.network;
+            });
+        }
+    }
+])

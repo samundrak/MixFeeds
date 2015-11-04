@@ -14,3 +14,6 @@ Route::get('dashboard/home', function ($home = 'home', $part = 'home') {
 
 	return view('dashboard.partials.home');
 });
+Route::get('/widget/{token}', function ($token) {
+	return view('widget', ['token' => $token]);
+});

@@ -1,6 +1,3 @@
-<div ng-if="widget.alert.message">
-	<response-messages messages="widget.alert.message" ></response-messages>
-</div>
 <ul class="list-group">
 	<li class="list-group-item">
 		<div class="main-wrapper">
