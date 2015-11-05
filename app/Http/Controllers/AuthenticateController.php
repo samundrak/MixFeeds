@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Custom\Utils;
 use Auth;
 use Illuminate\Http\Request;
-use Redirect;
 use Validator;
 
 class AuthenticateController extends Controller {
@@ -88,9 +88,7 @@ class AuthenticateController extends Controller {
 
 // if the validator fails, redirect back to the form
 		if ($validator->fails()) {
-			return Redirect::to('/views/home/partials/login')
-				->withErrors($validator) // send back all errors to the login form
-				->withInput($request->except('password')); // send back the input (not the password) so that we can repopulate the form
+			return Utils::response(0, Utils::getFormatedErrorMessages($validator->messages()));
 		} else {
 
 			// create our user data for the authentication
@@ -106,12 +104,11 @@ class AuthenticateController extends Controller {
 				// redirect them to the secure section or whatever
 				// return Redirect::to('secure');
 				// for now we'll just echo success (even though echoing in a controller is bad)
-				return Redirect::to('/dashboard/home')
-					->with('message', 'You are logged in');
+				return Utils::response(1, "Welcome", ["path" => "/dashboard/home"]);
 			} else {
 
 				// validation not successful, send back to form
-				return Redirect::to('/#/login');
+				return Utils::response(0, "Username / password didn't matched");
 
 			}
 

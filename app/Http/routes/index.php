@@ -1,5 +1,4 @@
 <?php
-
 Route::group(["prefix" => "/api"], function () {
 	require_once 'api/index.php';
 });

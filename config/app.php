@@ -143,6 +143,8 @@ return [
 		App\Providers\AppServiceProvider::class,
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
+		// App\Http\Controllers\Custom\Utils::class,
+
 		'Collective\Html\HtmlServiceProvider',
 		'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 	],
@@ -195,6 +197,7 @@ return [
 		'Form' => 'Collective\Html\FormFacade',
 		'HTML' => 'Collective\Html\HtmlFacade',
 		'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
+		// 'Utils' => App\Http\Controllers\Custom\Utils::class,
 
 	],
 

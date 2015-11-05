@@ -13,7 +13,7 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li >
-							<a href="home">Home</a>
+							<a href="/dashboard/home">Home</a>
 						</li>
 						<li ui-sref-active="active">
 							<a ui-sref="dashboard({page:'account'})">My Accounts</a>
@@ -21,7 +21,7 @@
 						 <li ui-sref-active="active">
 							<a ui-sref="dashboard({page:'profile'})">My Profile</a>
 						</li><li ui-sref-active="active">
-							<a ui-sref="dashboard({page:'settings'})">Settings</a>
+							<a ui-sref="settings.changePassword">Settings</a>
 						</li>
 						</li><li ui-sref-active="active">
 							<a ui-sref="widgets">Widgets</a>
@@ -44,6 +44,7 @@
 
 			</nav>
 			<div class="jumbotron">
+			<response-messages ng-if="{{Auth::user()->is_verified }} === 0" info="You are not verified user please verify your email" type="warning" ></response-messages>
 			<div class="row">
 			<response-messages ng-if="notification" messages="notification" ></response-messages>
 			<ui-view>

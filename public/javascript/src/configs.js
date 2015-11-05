@@ -41,11 +41,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 })
                 .state('register', {
                     url: '/register',
-                    templateUrl: getHomePartialsTemplate('register')
+                    templateUrl: getHomePartialsTemplate('register'),
+                    controller : 'authCtrl'
                 })
                 .state('login', {
                     url: '/login',
-                    templateUrl: getHomePartialsTemplate('login')
+                    templateUrl: getHomePartialsTemplate('login'),
+                    controller : 'authCtrl'
                 })
                 .state('account', {
                     url: '/account',
@@ -78,6 +80,32 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     url : '/edit/{id}',
                     templateUrl: '/views/dashboard/partials/create',
                     controller: 'widgetsCreateEditCtrl'
+                })
+                .state('settings',{
+                    url : '/settings',
+                    abstract:true,
+                    templateUrl : '/views/dashboard/partials/settings',
+
+                })
+                .state('settings.changePassword',{
+                    url: '/change_password',
+                    templateUrl : '/views/dashboard/partials/change_password',
+                    controller : "settingsCtrl"
+
+                })
+                .state('settings.changeEmail',{
+                    url: '/change_email',
+                    templateUrl : '/views/dashboard/partials/change_email',
+                    controller : "settingsCtrl"
+
+
+                })
+                .state('settings.deleteAccount',{
+                    url: '/delete_account',
+                    templateUrl : '/views/dashboard/partials/delete_account',
+                    controller : "settingsCtrl"
+                    
+
                 })
                 .state('dashboard', {
                     url: '/:page',

@@ -53,6 +53,8 @@
 
 			</nav>
 			<div class="jumbotron">
+			<response-messages ng-if="notification" messages="notification" ></response-messages>
+
 			<ui-view></ui-view>
 
 			</div>

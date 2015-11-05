@@ -22,7 +22,7 @@ Account Details</li>
 </li>
 
 <li class="list-group-item">
-	<img src="/public/img/pp.gif" class="img-responsive"/>
+	<a href="/payment"><img src="/public/img/pp.gif" class="img-responsive"/></a>
 </li>
 </ul>
 </ui-view>

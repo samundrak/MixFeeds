@@ -1,0 +1,40 @@
+<?php
+namespace Config\PayPal;
+return array(
+	// set your paypal credential
+	'client_id' => 'AUFndcIFT14BZdqJtTyxRJTWebjbid2m_tDHXtAJ9FLNICU56Y1JXTkcm1SQmglrZXHvC253TLJnXPuC',
+	'secret' => 'EOmAsIaNsklKz785JmEDn7UEsWjdiUGyD_hFb3i5n62VzhudoSaBXewWhlLG2qg74pjgz-9xAKIYtIIt',
+
+	/**
+	 * SDK configuration
+	 */
+	'settings' => array(
+		/**
+		 * Available option 'sandbox' or 'live'
+		 */
+		'mode' => 'sandbox',
+
+		/**
+		 * Specify the max request time in seconds
+		 */
+		'http.ConnectionTimeOut' => 30,
+
+		/**
+		 * Whether want to log to a file
+		 */
+		'log.LogEnabled' => true,
+
+		/**
+		 * Specify the file that want to write on
+		 */
+		'log.FileName' => storage_path() . '/logs/paypal.log',
+
+		/**
+		 * Available option 'FINE', 'INFO', 'WARN' or 'ERROR'
+		 *
+		 * Logging is most verbose in the 'FINE' level and decreases as you
+		 * proceed towards ERROR
+		 */
+		'log.LogLevel' => 'FINE',
+	),
+);

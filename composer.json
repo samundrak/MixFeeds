@@ -10,7 +10,8 @@
         "laravelcollective/html": "^5.1",
         "tymon/jwt-auth": "^0.5.5",
         "facebook/php-sdk-v4": "^5.1",
-        "paypal/rest-api-sdk-php": "*"
+        "paypal/rest-api-sdk-php": "*",
+        "netshell/paypal": "^1.1"
 
     },
     "require-dev": {

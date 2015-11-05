@@ -9,8 +9,8 @@ function getHomePartialsTemplate(path) {
 }
 var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnimate', 'ngMessages', 'ngSanitize'])
 
-.controller('dashboardCtrl', ['$scope', '$stateParams', '$http',
-    function($scope, $stateParams, $http) {
+.controller('dashboardCtrl', ['$scope', '$stateParams', '$http', 'notify',
+    function($scope, $stateParams, $http, notify) {
         $scope.loadingIcon = false;
 
         $scope.dashboard = {};
@@ -256,7 +256,9 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
         }
 
         $scope.$on('paginationClicked', function(type, data) {
-            getSubscriptionsDetails({desc: data.clicked});
+            getSubscriptionsDetails({
+                desc: data.clicked
+            });
         });
         getSubscriptionsDetails();
         getSubscriptionsPlans();
@@ -279,3 +281,86 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
         }
     }
 ])
+
+.controller('settingsCtrl', ['$scope', '$http', 'notify',
+    function($scope, $http, notify) {
+
+        $scope.changePassword = function() {
+            var data = {
+                oldPassword: $scope.oldPassword,
+                newPassword: $scope.newPassword,
+                confirmPassword: $scope.confirmPassword
+            }
+
+            $http.post('/api/user/password/edit', data).then(function(report) {
+                if (report.data.success) {
+                    notify(report.data.message);
+                    window.location.href = "/logout";
+                } else {
+                    notify(report.data.message);
+                }
+            }, function(error) {
+                notify($global.error.network);
+            });
+        }
+        $scope.changeEmail = function() {
+            var data = {
+                oldEmail: $scope.oldEmail,
+                newEmail: $scope.newEmail,
+                password: $scope.password
+            }
+            $http.post('/api/user/email/edit', data).then(function(report) {
+                if (report.data.success) {
+                    $scope.oldEmail = $scope.newEmail;
+                    $scope.newEmail = '';
+                    $scope.password = '';
+                    notify(report.data.message);
+                } else {
+                    notify(report.data.message);
+                }
+            }, function(error) {
+                notify($global.error.network);
+            });
+        }
+    }
+])
+    .controller('authCtrl', ['$scope', '$http', 'notify',
+        function($scope, $http, notify) {
+
+            $scope.register = function() {
+                var data = {
+                    firstname: $scope.firstname,
+                    lastname: $scope.lastname,
+                    email: $scope.email,
+                    password: $scope.password,
+                    password_confirmation: $scope.password_confirmation
+                }
+
+                $http.post('/auth/register', data).then(function(report) {
+                    if (report.data.success) {
+                        window.location.href = report.data.data.path;
+                    } else {
+                        notify(report.data.message)
+                    }
+                }, function(error) {
+                    notify($global.error.network);
+                });
+            }
+            $scope.login = function() {
+                var data = {
+                    email: $scope.email,
+                    password: $scope.password
+                }
+
+                $http.post('/auth/login', data).then(function(report) {
+                    if (report.data.success) {
+                        window.location.href = report.data.data.path;
+                    } else {
+                        notify(report.data.message);
+                    }
+                }, function(error) {
+                    ntoify($global.error.network);
+                })
+            }
+        }
+    ]);

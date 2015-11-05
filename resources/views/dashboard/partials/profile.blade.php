@@ -20,7 +20,7 @@
 			type="text" class="form-control" ng-model="dashboard.profile.lastname"/>
 		</li>
 		<li class="list-group-item">Email
-			<input name="email"
+			<input disabled name="email"
 			ng-minlength="3" ng-maxlength="100" ng-required="true"
 			type="email" class="form-control" ng-model="dashboard.profile.email"/>
 			{!! csrf_field() !!}
