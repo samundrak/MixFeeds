@@ -25,14 +25,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $fillable = ['firstname', 'lastname', 'email', 'password'];
 
-	public static $rules = [
-		'firstname' => 'required|min:2|alpha',
-		'lastname' => 'required|min:2|alpha',
-		'email' => 'required|email|uniqure:users',
-		'password' => 'required|between:8,12|alpha_num|confirmed',
-		'password_confirmation' => 'required|between:8,12|alpha_num',
-
-	];
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *

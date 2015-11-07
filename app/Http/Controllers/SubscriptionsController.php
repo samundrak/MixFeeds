@@ -17,7 +17,10 @@ class SubscriptionsController extends Controller {
 	public function index() {
 		//
 		$plans = DB::table('plans')
-			->where('active', 1)->get();
+			->join('plan_descs', "plans.id", '=', 'plan_descs.plan_id')
+			->where('plans.active', 1)
+			->select()
+			->get();
 
 		if (sizeof($plans)) {
 			return ['success' => 1, "data" => ["plans" => $plans]];
@@ -63,15 +66,15 @@ class SubscriptionsController extends Controller {
 		$data = DB::table('plans')->where('id', $request->input('plan'))
 			->first();
 		if ((Auth::user()->balance - $data->amount) > 0) {
-			$up = DB::table('users')->where('id', Auth::user()->id)->update(array('balance' => (Auth::user()->balance - $data->amount)));
-			if ($up) {
-				$exist = DB::table('subscription')
-					->where('start', ">=", date("Y-m-d"))
-					->where('end', "<=", date("Y-m-d", strtotime(" +30 days ")))
-					->where('user', Auth::user()->id)
-					->where('plan', $request->input('plan'))
-					->first();
-				if (!$exist) {
+			$exist = DB::table('subscription')
+				->where('start', ">=", date("Y-m-d"))
+				->where('end', "<=", date("Y-m-d", strtotime(" +30 days ")))
+				->where('user', Auth::user()->id)
+			// ->where('plan', $request->input('plan'))
+				->first();
+			if (!$exist) {
+				$up = DB::table('users')->where('id', Auth::user()->id)->update(array('balance' => (Auth::user()->balance - $data->amount)));
+				if ($up || ($data->amount === '0')) {
 					$subs = new Subscriptions;
 					$subs->start = date("Y-m-d");
 					$subs->end = date("Y-m-d", strtotime(" +30 days "));
@@ -83,11 +86,11 @@ class SubscriptionsController extends Controller {
 					return ["data" => ["amount" => $data->amount], "message" => "You have successfully subsribed to this plan", "success" => 1];
 
 				} else {
-					return ["message" => "You have already subscribed this plan for this month", "success" => 0];
 
+					return ["message" => "Unable to subscribe please try again", "success" => 0];
 				}
 			} else {
-				return ["message" => "Unable to subscribe please try again", "success" => 0];
+				return ["message" => "You have already subscribed to a plan for this month", "success" => 0];
 			}
 		} else {
 			return ["message" => "Your dont enough balance to subscribe", "success" => 0];
