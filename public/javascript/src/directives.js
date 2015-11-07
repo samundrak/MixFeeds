@@ -6,7 +6,8 @@ app.directive('responseMessages', [
             scope: {
                 messages: "=messages",
                 info: "@info",
-                type: "@type"
+                type: "@type",
+                popup: "=popup"
             },
             template: " {{ data }}",
             link: function(scope, iElement, iAttrs) {
@@ -24,7 +25,12 @@ app.directive('responseMessages', [
                     });
                     data += '</div>'
                 }
-                $compile(iElement.html('<div ng-click="hide()">' + data + '</div>').contents())(scope);
+
+                if (scope.popup)
+                    $compile(iElement.html('<div style="position:fixed;z-index:99999;top:1%;left:40%;" ng-click="hide()">' + data + '</div>').contents())(scope);
+                else
+                    $compile(iElement.html('<div ng-click="hide()">' + data + '</div>').contents())(scope);
+
 
             },
             controller: function($scope, $rootScope, $timeout) {

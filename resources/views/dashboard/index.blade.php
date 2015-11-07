@@ -46,7 +46,7 @@
 			<div class="jumbotron">
 			<response-messages ng-if="{{Auth::user()->is_verified }} === 0" info="You are not verified user please verify your email" type="warning" ></response-messages>
 			<div class="row">
-			<response-messages ng-if="notification" messages="notification" ></response-messages>
+			<response-messages  popup="true" ng-if="notification" messages="notification" ></response-messages>
 			<ui-view>
 					 <span  class="glyphicon glyphicon-refresh spinning"></span>
 

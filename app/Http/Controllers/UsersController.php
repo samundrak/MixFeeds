@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Custom\Utils;
+use App\User;
 use Auth;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
 use Input;
 use Redirect;
-use User;
 use Validator;
 
 class UsersController extends Controller {
@@ -106,7 +106,7 @@ class UsersController extends Controller {
 		if (!$validator->passes()) {
 			return json_encode(["success" => 0, "message" => $validator->messages()->toJson()]);
 		}
-		$user = new User();
+		$user = new User;
 		$user->update(array(
 			'firstname' => Input::get('firstname'),
 			'lastname' => Input::get('lastname'),
@@ -134,12 +134,29 @@ class UsersController extends Controller {
 			));
 		}
 		$user = Auth::user();
+		$subscribe = DB::table('subscription')
+			->join('plans', 'subscription.plan', '=', 'plans.id')
+			->where('subscription.user', Auth::user()->id)
+			->where('subscription.start', ">=", date("Y-m-d"))
+			->where('subscription.end', "<=", date("Y-m-d", strtotime(" +30 days ")))
+			->first();
+		if (sizeof($subscribe)) {
+			$desc = DB::table('plan_descs')
+				->where('plan_id', $subscribe->id)
+				->first();
+			$subscribe->rules = json_encode($desc);
+		}
 		return json_encode(array(
 			'success' => 1,
 			'data' => array(
 				'firstname' => $user->firstname,
 				'lastname' => $user->lastname,
-				'email' => $user->email),
+				'email' => $user->email,
+				'balance' => $user->balance,
+				'is_verified' => $user->is_verified,
+				'is_admin' => $user->is_admin,
+				'subscribe' => json_encode($subscribe),
+			),
 		));
 	}
 

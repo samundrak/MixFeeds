@@ -22,6 +22,11 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                         console.log(report);
                         if (report.data.success) {
                             $scope.dashboard.profile = report.data.data;
+                            $scope.dashboard.profile.subscribe = JSON.parse($scope.dashboard.profile.subscribe);
+                            $scope.dashboard.profile.subscribe.desc = JSON.parse($scope.dashboard.profile.subscribe.desc);
+                            $scope.dashboard.profile.subscribe.desc.settings = JSON.parse($scope.dashboard.profile.subscribe.desc.settings);
+                            $scope.dashboard.profile.subscribe.desc.points = JSON.parse($scope.dashboard.profile.subscribe.desc.points);
+                            console.log($scope.dashboard);
                         } else {
                             window.location.href = '/#/login';
                         }
@@ -68,6 +73,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
 .controller('widgetsCtrl', ['$scope', '$http', '$rootScope', 'notify',
     function($scope, $http, $rootScope, notify) {
+
         $scope.deleteWidget = function(item) {
             if (!confirm("Are you sure you want to delete this widget")) return;
             $scope.response_message = undefined;
@@ -132,8 +138,11 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
     }
 ])
-    .controller('widgetsCreateEditCtrl', ['$scope', '$http', '$stateParams', '$state', 'notify',
-        function($scope, $http, $stateParams, $state, notify) {
+    .controller('widgetsCreateEditCtrl', ['$scope', '$http', '$stateParams', '$state', 'notify', 'profile',
+        function($scope, $http, $stateParams, $state, notify, profile) {
+            profile.call().then(function(promise) {
+                $scope.profile = promise;
+            });
             $scope.widget = {
                 alert: {},
                 settings: {
@@ -142,9 +151,12 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
             };
             $scope.widget.pagesCounter = [0];
             $scope.addFacebookPages = function() {
+                if (parseInt($scope.profile.subscribe.rules.pages) <= $scope.widget.pagesCounter.length)
+                    return notify(['You are not allowed to add more then ' + $scope.profile.subscribe.rules.pages + ' pages as a ' + $scope.profile.subscribe.plan + ' subscriber']);
                 $scope.widget.pagesCounter.push('http://www.facebook.com/');
             }
             $scope.removeFacebookPages = function(index) {
+                if (index === 0) return notify(['You must have atleast one page']);
                 $scope.widget.pagesCounter.splice(index, 1);
             }
             $scope.createWidget = function() {
@@ -231,11 +243,21 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
             alert: {}
         }
         $scope.plans = {};
+        $scope.planStatus = function(data) {
+            // console.log(new Date() > new Date(data.start));
+            // console.log(new Date() < new Date(data.end));
+            return (new Date() > new Date(data.start) && new Date() < new Date(data.end)) ? "Running" : "Finished";
+        }
         var getSubscriptionsPlans = function() {
             $http.get('/api/subscribe/plans').then(function(report) {
                     $scope.plans = report.data;
                     if (!report.data.success)
-                        notify([report.data.message]);
+                        return notify([report.data.message]);
+
+                    report.data.data.plans.forEach(function(post, index) {
+                        $scope.plans.data.plans[index].points = JSON.parse($scope.plans.data.plans[index].points);
+                    });
+                    console.log($scope.plans);
                 },
                 function(error) {
                     notify($global.error.network);
