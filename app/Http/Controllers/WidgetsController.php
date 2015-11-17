@@ -8,6 +8,7 @@ use DB;
 use Illuminate\Http\Request;
 use Input;
 use Validator;
+use View;
 
 class WidgetsController extends Controller {
 	/**
@@ -168,5 +169,14 @@ class WidgetsController extends Controller {
 		}
 		return ["success" => 0, "message" => "Unable to delete"];
 
+	}
+
+	public function widget($token) {
+		$data = DB::table('widgets')->where('token', '=', $token)->first();
+		$data->settings = json_decode($data->settings);
+		$data->pages = json_decode($data->pages);
+		$data->settings->size = json_decode($data->settings->size);
+		$data->settings->display = json_decode($data->settings->display);
+		return View::make('widget', ['data' => $data]);
 	}
 }

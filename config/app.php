@@ -147,6 +147,7 @@ return [
 
 		'Collective\Html\HtmlServiceProvider',
 		'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+		// 'Anouar\Paypalpayment\PaypalpaymentServiceProvider',
 	],
 
 	/*
@@ -197,6 +198,7 @@ return [
 		'Form' => 'Collective\Html\FormFacade',
 		'HTML' => 'Collective\Html\HtmlFacade',
 		'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
+		// 'Paypalpayment' => 'Anouar\Paypalpayment\Facades\PaypalPayment',
 		// 'Utils' => App\Http\Controllers\Custom\Utils::class,
 
 	],

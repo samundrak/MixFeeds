@@ -10,8 +10,8 @@
         "laravelcollective/html": "^5.1",
         "tymon/jwt-auth": "^0.5.5",
         "facebook/php-sdk-v4": "^5.1",
-        "paypal/rest-api-sdk-php": "*",
-        "netshell/paypal": "^1.1"
+        "paypal/rest-api-sdk-php": "*"
+
 
     },
     "require-dev": {
@@ -19,12 +19,14 @@
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1"
-        
+
     },
     "autoload": {
         "classmap": [
-            "database"
+            "database",
+            "app/Custom"
         ],
+        
         "psr-4": {
             "App\\": "app/"
         }

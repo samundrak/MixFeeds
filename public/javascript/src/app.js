@@ -22,10 +22,15 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                         console.log(report);
                         if (report.data.success) {
                             $scope.dashboard.profile = report.data.data;
-                            $scope.dashboard.profile.subscribe = JSON.parse($scope.dashboard.profile.subscribe);
-                            $scope.dashboard.profile.subscribe.desc = JSON.parse($scope.dashboard.profile.subscribe.desc);
-                            $scope.dashboard.profile.subscribe.desc.settings = JSON.parse($scope.dashboard.profile.subscribe.desc.settings);
-                            $scope.dashboard.profile.subscribe.desc.points = JSON.parse($scope.dashboard.profile.subscribe.desc.points);
+                            try {
+                                $scope.dashboard.profile.subscribe = JSON.parse($scope.dashboard.profile.subscribe);
+                                $scope.dashboard.profile.subscribe.desc = JSON.parse($scope.dashboard.profile.subscribe.desc);
+                                $scope.dashboard.profile.subscribe.desc.settings = JSON.parse($scope.dashboard.profile.subscribe.desc.settings);
+                                $scope.dashboard.profile.subscribe.desc.points = JSON.parse($scope.dashboard.profile.subscribe.desc.points);
+
+                            } catch (err) {
+
+                            }
                             console.log($scope.dashboard);
                         } else {
                             window.location.href = '/#/login';
@@ -167,9 +172,9 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 data.display = $scope.widget.settings.display || null;
                 data.size = $scope.widget.settings.size || null;
 
-                data.show_friends_face = $scope.widget.settings.show_friends_face || null;
-                data.show_small_header = $scope.widget.settings.show_small_header || null;
-                data.hide_cover_photo = $scope.widget.settings.hide_cover_photo || null;
+                data.show_friends_face = $scope.widget.settings.show_friends_face || 0;
+                data.show_small_header = $scope.widget.settings.show_small_header || 0;
+                data.hide_cover_photo = $scope.widget.settings.hide_cover_photo || 0;
                 data.domain = $scope.widget.settings.domain;
                 data.state = $state.current.name
                 if ($state.current.name === 'widgets.edit') {
@@ -386,3 +391,19 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
             }
         }
     ]);
+
+
+
+
+function x() {
+    this.name = 'samundra';
+    this.caste = 'kc';
+}
+
+x.prototype.fullname = function(argument) {
+    return this.name + '' + this.caste;
+};
+
+x.prototype.address = 'butwal';
+e = new x();
+console.log(e.__proto__.hasOwnProperty('address'));

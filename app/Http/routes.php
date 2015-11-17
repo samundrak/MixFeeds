@@ -15,3 +15,10 @@
  */
 
 require_once 'routes/index.php';
+Route::post('/expresscheckout', 'PaypalController@create');
+Route::get('/topup/done', 'PaypalController@done');
+Route::get('/topup/failed', 'PaypalController@failed');
+
+function fbpp($string) {
+	return explode("/", "$string")[3];
+}

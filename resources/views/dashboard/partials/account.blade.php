@@ -22,7 +22,10 @@ Account Details</li>
 </li>
 
 <li class="list-group-item">
-	<a href="/payment"><img src="/public/img/pp.gif" class="img-responsive"/></a>
+<form action='/expresscheckout' METHOD='POST'>
+<input type='image' name='submit' src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif' border='0' align='top' alt='Check out with PayPal'/>
+</form>
+	{{-- <a href="/payment"><img src="/public/img/pp.gif" class="img-responsive"/></a> --}}
 </li>
 </ul>
 </ui-view>
