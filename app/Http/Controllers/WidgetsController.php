@@ -81,7 +81,32 @@ class WidgetsController extends Controller {
 			"updated_at" => \Carbon\Carbon::now(),
 
 		);
+		$requestedPages = (count($vals['pages']));
 		if ($request->input('state') === 'widgets.create') {
+
+			$exist = DB::table('subscription')
+				->where('end', ">=", date("Y-m-d"))
+				->where('end', "<=", date("Y-m-d", strtotime(" +30 days ")))
+				->where('user', Auth::user()->id)
+			// ->where('plan', $request->input('plan'))
+				->first();
+
+			$plan = $exist->plan;
+			$restrict = DB::table('plan_descs')
+				->where('plan_id', $plan)
+				->first();
+			$limitWidgets = (int) $restrict->widgets;
+
+			$totalWidgets = (int) DB::table('widgets')
+				->where('creator', Auth::user()->id)
+				->count();
+
+			if ($requestedPages >= $restrict->pages) {
+				return json_encode(["success" => 0, "message" => "You are n't allowed to add more then " . $requestedPages . " pages"]);
+			}
+			if ($totalWidgets >= $limitWidgets) {
+				return json_encode(["success" => 0, "message" => "You can't create more widgets"]);
+			}
 			$vals['token'] = md5(time() . Auth::user()->id);
 			$id = DB::table('widgets')
 				->insertGetId($vals);
@@ -177,6 +202,18 @@ class WidgetsController extends Controller {
 		$data->pages = json_decode($data->pages);
 		$data->settings->size = json_decode($data->settings->size);
 		$data->settings->display = json_decode($data->settings->display);
-		return View::make('widget', ['data' => $data]);
+		$subscription = DB::table('subscription')
+			->where('end', ">=", date("Y-m-d"))
+			->where('end', "<=", date("Y-m-d", strtotime(" +30 days ")))
+			->where('user', Auth::user()->id)
+		// ->where('plan', $request->input('plan'))
+			->first();
+
+		if (!$subscription) {
+			return 'Error';
+		}
+
+		$data->subscription = $subscription;
+		return View::make('widgets.index', ['data' => $data]);
 	}
 }

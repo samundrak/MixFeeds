@@ -22,3 +22,11 @@ Route::get('/topup/failed', 'PaypalController@failed');
 function fbpp($string) {
 	return explode("/", "$string")[3];
 }
+
+function getWidthHeight($data, $props) {
+	// print_r($data);
+	if (property_exists($data, $props)) {
+		return $data[$props];
+	}
+	return '';
+}

@@ -8,6 +8,10 @@
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('/public/styles/loading-bar.css')}}">
 	<link href="{{ URL::asset('/public/styles/font-awesome.min.css')}}" rel="stylesheet">
 
+	<link href="{{ URL::asset('/public/styles/bootstrap-theme.min.css')}}" rel="stylesheet">
+	<link href="{{ URL::asset('/public/styles/demo-slideshow.css')}}" rel="stylesheet">
+	<link href="{{ URL::asset('/public/styles/style.css')}}" rel="stylesheet">
+
 
 
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/lib/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>

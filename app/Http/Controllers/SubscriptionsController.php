@@ -67,7 +67,7 @@ class SubscriptionsController extends Controller {
 			->first();
 		if ((Auth::user()->balance - $data->amount) > 0) {
 			$exist = DB::table('subscription')
-				->where('start', ">=", date("Y-m-d"))
+				->where('end', ">=", date("Y-m-d"))
 				->where('end', "<=", date("Y-m-d", strtotime(" +30 days ")))
 				->where('user', Auth::user()->id)
 			// ->where('plan', $request->input('plan'))

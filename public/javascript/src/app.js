@@ -186,18 +186,21 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     if (!report.data.success) {
                         var msg = [];
                         // if ($state.current.name === 'widgets.create') {
-                        report.data.message = JSON.parse(report.data.message);
-                        for (var key in report.data.message) {
-                            report.data.message[key].forEach(function(post) {
-                                msg.push(post);
-                            });
+                        try {
+                            report.data.message = JSON.parse(report.data.message);
+                            for (var key in report.data.message) {
+                                report.data.message[key].forEach(function(post) {
+                                    msg.push(post);
+                                });
+                            }
+                        return notify(msg);
+                        } catch (err) {
+                            notify([report.data.message]);
                         }
-
                         // } else {
                         // msg = [report.data.message];
                         // }
 
-                        return notify(msg);
                     }
                     return notify(report.data.message);
                 }, function(error) {

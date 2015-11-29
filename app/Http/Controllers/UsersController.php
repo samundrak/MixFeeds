@@ -137,8 +137,10 @@ class UsersController extends Controller {
 		$subscribe = DB::table('subscription')
 			->join('plans', 'subscription.plan', '=', 'plans.id')
 			->where('subscription.user', Auth::user()->id)
-			->where('subscription.start', ">=", date("Y-m-d"))
-			->where('subscription.end', "<=", date("Y-m-d", strtotime(" +30 days ")))
+		// ->where('subscription.start', ">=", date("Y-m-d"))
+		// ->where('subscription.end', "<=", date("Y-m-d", strtotime(" +30 days ")))
+			->where('end', ">=", date("Y-m-d"))
+			->where('end', "<=", date("Y-m-d", strtotime(" +30 days ")))
 			->first();
 		if (sizeof($subscribe)) {
 			$desc = DB::table('plan_descs')

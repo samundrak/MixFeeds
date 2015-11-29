@@ -1,0 +1,208 @@
+*, *:after, *:before{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+*:fullscreen
+*:-ms-fullscreen,
+*:-webkit-full-screen,
+*:-moz-full-screen {
+   overflow: auto !important;
+}
+
+
+html {
+  margin: 0px;
+  padding: 0px;
+} 
+
+body {
+	background-color: #fff;
+  min-width: 320px;
+	margin: 10px;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  border: none;
+  direction: ltr;
+  text-rendering: optimizeLegibility !important;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+
+}
+
+
+section, footer, header, aside{
+	display: block;
+}
+
+img{
+	border: none;
+}
+
+b, strong {
+  font-weight: 700;
+}
+
+a{ text-decoration: none;}
+
+a:focus{
+	outline:none;
+	text-decoration: none !important;
+}
+
+a:active{
+	text-decoration: none !important;
+}
+
+a:focus, a:hover {
+	text-decoration:none;
+  color: #17999E;
+}
+
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -o-box-shadow: none !important;
+}
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn.active.focus {
+  outline: none;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+  margin: 0px;
+  font-weight: 300;
+}
+
+ul li{
+  list-style-type: none;
+}
+
+.widget-00vfe-main{
+  width: 600px;
+  margin: 0 auto;
+}
+
+.widget-00vfe{
+  width: 100%;
+  min-width: 300px !important;
+  height: 650px;
+  border:1px solid #ebebeb;
+  margin: 0 auto;
+
+}
+.widget-00vfe-left{
+  position: relative;
+  height: 100%;
+  width: 15%;
+  border-right: 1px solid #ebebeb;
+  float: left;
+  overflow: hidden;
+  
+}
+.widget-00vfe-right{
+  width: 85%;
+  height: 100%;
+  float: left;
+  overflow: hidden;
+}
+.widget-00vfe-left-top{
+  position: absolute;
+  width: 100%;
+  padding: 15px 5px;
+  top: 0px;
+  text-align: center;
+  background-color: #fff;
+  z-index: 2;
+}
+.widget-00vfe-left-top:after{
+  content: "";
+  color:#ccc;
+  position: absolute;
+  bottom: -5px;
+  left: 10px;
+  right: 10px;
+  height: 0.5em;
+  border-top: 1px solid #ebebeb;
+  z-index: 1;
+}
+.widget-00vfe-left-bottom{
+  position: absolute;
+  width: 100%;
+  padding: 15px 5px;
+  bottom:0px;
+  text-align: center;
+  background-color: #fff;
+  z-index: 2;
+}
+.widget-00vfe-left-bottom:before{
+  content: "";
+  color:#ccc;
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  right: 10px;
+  height: 0.5em;
+  border-top: 1px solid #ebebeb;
+  z-index: 1;
+}
+.widget-00vfe-left-top img, .widget-00vfe-left-bottom img{
+  width: 60%;
+  text-align: center;
+}
+.widget-00vfe-container a{
+  display: block;
+}
+
+.img-ac{
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+}
+
+.widget-00vfe-left-top:hover > .img-ac{
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  margin-top:5px;
+}
+
+.widget-00vfe-left-bottom:hover > .img-ac{
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  margin-bottom: 5px;
+}
+
+.widget-00vfe-container{
+  display: block;
+  height: 100%;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.ex-img{
+  width: 100%;
+  cursor: pointer;
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.h3-temp{
+  padding-left: 10px;
+  margin-top: 10px;
+}
