@@ -205,7 +205,7 @@ class WidgetsController extends Controller {
 		$subscription = DB::table('subscription')
 			->where('end', ">=", date("Y-m-d"))
 			->where('end', "<=", date("Y-m-d", strtotime(" +30 days ")))
-			->where('user', Auth::user()->id)
+			->where('user', $data->creator)
 		// ->where('plan', $request->input('plan'))
 			->first();
 
