@@ -19,8 +19,13 @@ Route::post('/expresscheckout', 'PaypalController@create');
 Route::get('/topup/done', 'PaypalController@done');
 Route::get('/topup/failed', 'PaypalController@failed');
 
-function fbpp($string) {
-	return explode("/", "$string")[3];
+Route::resource('payment', 'PaypalPaymentController');
+function fbpp($string, $img = false) {
+	$name = explode("/", "$string")[3];
+	if ($img) {
+		return $name;
+	}
+	return str_replace(".", "_", $name);
 }
 
 function getWidthHeight($data, $props) {
