@@ -91,6 +91,9 @@ class WidgetsController extends Controller {
 			// ->where('plan', $request->input('plan'))
 				->first();
 
+			if (!$exist) {
+				return json_encode(["success" => 0, "message" => ["You have n't subscribed to any packaged till."]]);
+			}
 			$plan = $exist->plan;
 			$restrict = DB::table('plan_descs')
 				->where('plan_id', $plan)
@@ -198,6 +201,10 @@ class WidgetsController extends Controller {
 
 	public function widget($token) {
 		$data = DB::table('widgets')->where('token', '=', $token)->first();
+		if (!$data) {
+			return 'Sorry No widgets found!';
+		}
+
 		$data->settings = json_decode($data->settings);
 		$data->pages = json_decode($data->pages);
 		$data->settings->size = json_decode($data->settings->size);
