@@ -49,6 +49,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     templateUrl: getHomePartialsTemplate('login'),
                     controller : 'authCtrl'
                 })
+                .state('forget_password',{
+                    url :'/forget_password',
+                    templateUrl :getHomePartialsTemplate('forget_password'),
+                    controller :  'forgetPasswordCtrl'
+                })
+                .state('reset_password',{
+                    url:'/reset_password/:params',
+                    templateUrl: getHomePartialsTemplate('reset_password'),
+                    controller :  'resetPasswordCtrl'
+                })
                 .state('account', {
                     url: '/account',
                     templateUrl: '/views/dashboard/partials/account',

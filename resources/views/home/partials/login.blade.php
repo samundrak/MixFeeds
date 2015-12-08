@@ -20,4 +20,7 @@
         <input class="btn btn-primary" type="submit" ng-disabled="( !email || !password )"/>
     </div>
 </form>
-
+<br/>
+<div >
+    <a ui-sref="forget_password">Forget Password</a>
+</div>

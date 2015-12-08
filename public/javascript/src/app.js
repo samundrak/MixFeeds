@@ -193,7 +193,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                                     msg.push(post);
                                 });
                             }
-                        return notify(msg);
+                            return notify(msg);
                         } catch (err) {
                             notify([report.data.message]);
                         }
@@ -389,12 +389,55 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                         notify(report.data.message);
                     }
                 }, function(error) {
-                    ntoify($global.error.network);
+                    notify($global.error.network);
                 })
             }
         }
-    ]);
+    ]).controller('forgetPasswordCtrl', ['$scope', '$http', 'notify',
+        function($scope, $http, notify) {
+            $scope.forgetPassword = function() {
+                $http.post('/api/user/forget_password', {
+                    email: $scope.email
+                }).
+                then(function(report) {
+                    if (report.success) {
 
+                        return notify(report.data.message);
+                    } else {
+
+                        return notify([report.data.message]);
+                    }
+                })
+                    .catch(function(error) {
+                        notify($global.error.network);
+                    });
+            }
+        }
+    ])
+.controller('resetPasswordCtrl', ['$scope','$http','notify','$stateParams', function ($scope,$http,notify,$stateParams) {
+    $scope.resetPassword = function(){
+        if(!$scope.password) return;
+        if(!$stateParams.hasOwnProperty('params')) return;
+
+        var hash =  $stateParams.params;
+        $http.post('/api/user/reset_password',{
+            hash :  hash,
+            password :  $scope.password
+        })
+        .then(function(report){
+            report = report.data;
+            console.log(report);
+            if(report.success){
+                window.location.href="/#/login";
+            }
+            notify(report.message);
+        })
+        .catch(function(error){
+            alert('Some error occured');
+        });
+
+    }
+}])
 
 
 

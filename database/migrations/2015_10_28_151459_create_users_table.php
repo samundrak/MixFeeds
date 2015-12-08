@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration {
 				$table->boolean('is_admin')->default(0);
 				$table->double('balance')->default(0.0);
 				$table->boolean('is_active')->default(0);
+				$table->string('hash_email')->default('null');
 				$table->timestamps();
 			});
 		}

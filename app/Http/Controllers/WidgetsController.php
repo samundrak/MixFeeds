@@ -210,7 +210,7 @@ class WidgetsController extends Controller {
 			->first();
 
 		if (!$subscription) {
-			return 'Error';
+			return 'This Widgets Subscription period has been finished';
 		}
 
 		$data->subscription = $subscription;
