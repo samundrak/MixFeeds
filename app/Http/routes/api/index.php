@@ -8,3 +8,6 @@ Route::group(["prefix" => "/user"], function () {
 Route::group(["prefix" => "/subscribe"], function () {
 	require_once 'subscriptions.php';
 });
+Route::group(["prefix" => "/admin"], function () {
+	require_once ('admin.php');
+});

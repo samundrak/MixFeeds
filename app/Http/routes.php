@@ -15,11 +15,6 @@
  */
 
 require_once 'routes/index.php';
-Route::post('/expresscheckout', 'PaypalController@create');
-Route::get('/topup/done', 'PaypalController@done');
-Route::get('/topup/failed', 'PaypalController@failed');
-
-Route::resource('payment', 'PaypalPaymentController');
 Route::get('/reset_password/{params}', 'ResetPassword@create');
 function fbpp($string, $img = false) {
 	$name = explode("/", "$string")[3];

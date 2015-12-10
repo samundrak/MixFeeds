@@ -125,6 +125,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     },
                     controller: 'dashboardCtrl'
                 })
+                
 
         }
     ])

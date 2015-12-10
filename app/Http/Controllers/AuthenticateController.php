@@ -104,6 +104,10 @@ class AuthenticateController extends Controller {
 				// redirect them to the secure section or whatever
 				// return Redirect::to('secure');
 				// for now we'll just echo success (even though echoing in a controller is bad)
+				$code = Auth::user()->is_verified;
+				if ($code === '3') {
+					return Utils::response(0, "Your account has been deleted");
+				}
 				return Utils::response(1, "Welcome", ["path" => "/dashboard/home"]);
 			} else {
 

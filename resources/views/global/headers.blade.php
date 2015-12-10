@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/lib/angular-ui-router.min.js')}}"></script>
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/lib/angular-messages.js')}}"></script>
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/lib/angular-sanitize.js')}}"></script>
+	<script type="text/javascript" src="{{ URL::asset('/public/javascript/lib/underscore.min.js')}}"></script>
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/src/app.js')}}"></script>
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/src/configs.js')}}"></script>
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/src/directives.js')}}"></script>
