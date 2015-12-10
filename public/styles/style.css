@@ -89,8 +89,8 @@ ul li{
 }
 
 .widget-00vfe-main{
-  width: 600px;
-  margin: 0 auto;
+  min-width: 400px;
+  width: 400px;
 }
 
 .widget-00vfe{
@@ -162,6 +162,8 @@ ul li{
 }
 .widget-00vfe-container a{
   display: block;
+  width: 100%;
+  text-align: center;
 }
 
 .img-ac{
@@ -196,7 +198,7 @@ ul li{
 }
 
 .ex-img{
-  width: 100%;
+  width: 80% !important;
   cursor: pointer;
   padding: 2px 4px;
   text-align: center;
@@ -205,4 +207,42 @@ ul li{
 .h3-temp{
   padding-left: 10px;
   margin-top: 10px;
+}
+
+.ui-carousel {
+  height: 100px;
+  margin: 0;
+  overflow: auto;
+  padding: 0;
+  position: relative; /*for ie7 to work e.g in html carousels*/
+  width: 300px
+}
+
+.ui-carousel > .wrapper {
+    margin: 0;
+    padding: 0;
+    width: 9999px;
+}
+
+.ui-carousel > .wrapper > * {
+  border: 0;
+  display: block;
+  float: left;
+  height: 100px;
+  overflow: hidden;
+  width: 100px; 
+}
+
+#carousel {
+  position: absolute;
+  top: 50px;
+}
+
+#carousel img {
+  border: 0;
+}
+
+
+#ui-carousel-next > span, #ui-carousel-prev > span {
+  display: none;
 }

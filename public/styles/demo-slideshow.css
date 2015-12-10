@@ -1,15 +1,14 @@
 
-.cycle-slideshow, .cycle-slideshow * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-.cycle-slideshow { width: 45%; min-width: 200px; max-width: 500px; margin: 10px auto; padding: 0; position: relative;
+.cycle-carousel-wrap, .cycle-carousel-wrap * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.cycle-carousel-wrap {  width: 100%; min-width: 50px; margin: 10px auto; padding: 0; position: relative;
     background: url(../imgaes/loading.gif) 50% 50% no-repeat;
  }
-.cycle-slideshow img { 
-    position: absolute; top: 0; left: 0;
-    width: 100%; padding: 0; display: block;
+.cycle-carousel-wrap img { 
+    width: 100%; padding: 0; display: block; text-align: center;
 }
 
 /* in case script does not load */
-.cycle-slideshow img:first-child {
+.cycle-carousel-wrap img:first-child {
     position: static; z-index: 100;
 }
 /* pager */
@@ -47,7 +46,7 @@
     opacity: .5; filter: alpha(opacity=50);
 }
 @media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
-    .cycle-slideshow { width: 200px;}
+    .cycle-carousel-wrap { width: 200px;}
     .cycle-overlay { padding: 4px }
     .cycle-caption { bottom: 4px; right: 4px }
 }
