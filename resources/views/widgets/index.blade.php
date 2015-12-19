@@ -12,22 +12,22 @@
 	<div class="widget-00vfe-left">
 		<div class="widget-00vfe-left-top" ><a href="#" id="prev" class="prev"><img class="img-ac" src="../../../public/widget/images/top-arrow.png"></a></div>
 		<div class="widget-00vfe-container" id="container">
-			
+
 			<div class="items">
-			    
+
 			   @foreach($data->pages as $page)
-			   	
-				  
+
+
 				  	<a class="item" id="li_{{fbpp($page)}}" onClick="viewWidgets('{{fbpp($page)}}')" style="cursor:pointer" href="#">
 				  		<img class="ext-img" id="img_{{fbpp($page)}}" src="http://graph.facebook.com/v2.5/{{fbpp($page,true)}}/picture?width=200&height=200"/>
 				  	</a>
-				 
-				
+
+
 				@endforeach
-			   
+
 			</div>
 		</div>
-		
+
 		<div class="widget-00vfe-left-bottom"><a href="#" id="next" class="next"><img class="img-ac" src="../../../public/widget/images/bottom-arrow.png"></a></div>
 	</div>
 	<div class="widget-00vfe-right tab-content">
@@ -36,7 +36,7 @@
 	</div>
 	@if($data->subscription->plan != 4)
 	<p class="powered-link" style="text-align:right; font-size:11px;">Powered by: <a style="text-decoration:underline; color:#40b622" href="#">www.MultiEmbed.com</a></p>
-	@endif	
+	@endif
 </div>
 
 </div>
@@ -45,19 +45,19 @@
 function viewWidgets(item){
 		widgetsIds.forEach(function (post) {
 			$("#"+post).slideUp(100);
-			
+
 					$("#li_"+post).css("opacity","0.5");
 
 
 		});
-			
+
 			$("#li_"+item).css("opacity","1");
 
 		$("#"+item).slideDown(200);
 		$("#title").html(item.toUpperCase());
 	}
 
-	
+
 
 				var widgets = {};
 				var widgetsIds = [];
@@ -78,7 +78,7 @@ widgets['{{fbpp($page)}}'] ='<div style="display:none;" id="{{fbpp($page)}}"><di
 					console.log(widgetsIds[0])
 					console.log(key)
 					$("#"+key).css("display","block");
-					
+
 					$("#li_"+key).css("opacity","1");
 				}
 			}

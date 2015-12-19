@@ -25,9 +25,19 @@ function fbpp($string, $img = false) {
 }
 
 function getWidthHeight($data, $props) {
-	// print_r($data);
-	if (property_exists($data, $props)) {
-		return $data[$props];
+	if (property_exists($data, 'responsive')) {
+		if ($data->responsive === '1') {
+			return '1';
+		}
+	}
+	if ($props === 'width') {
+		if (property_exists($data, $props)) {
+			return $data->width === '0' ? '' : $data->width;
+		}
+	} else if ($props === 'height') {
+		if (property_exists($data, $props)) {
+			return $data->height === '0' ? '' : $data->height;
+		}
 	}
 	return '';
 }
