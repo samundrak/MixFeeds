@@ -26,7 +26,6 @@
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/src/configs.js')}}"></script>
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/src/directives.js')}}"></script>
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/src/services.js')}}"></script>
-	<script type="text/javascript" src="../../../public/javascript/src/widget_cycle.js"></script>
-	<script type="text/javascript" src="../../../public/javascript/src/widget_cycle.carousel.js"></script>
-	<script type="text/javascript">$.fn.cycle.defaults.autoSelector = '.slideshow';</script> 
+	
+
 	</head>
