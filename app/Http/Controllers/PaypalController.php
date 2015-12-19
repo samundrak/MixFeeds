@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 class PaypalController extends Controller {
 
-	public function create() {
+	public function create(Request $request) {
 
 		//Database Connection
 
@@ -21,15 +21,15 @@ class PaypalController extends Controller {
 		}
 
 		// assign posted variables to local variables
-		$data['item_name'] = $_POST['item_name'];
-		$data['item_number'] = $_POST['item_number'];
-		$data['payment_status'] = $_POST['payment_status'];
-		$data['payment_amount'] = $_POST['mc_gross'];
-		$data['payment_currency'] = $_POST['mc_currency'];
-		$data['txn_id'] = $_POST['txn_id'];
-		$data['receiver_email'] = $_POST['receiver_email'];
-		$data['payer_email'] = $_POST['payer_email'];
-		$data['custom'] = $_POST['custom'];
+		$data['item_name'] = $request->input('item_name'); //$_POST['item_name'];
+		$data['item_number'] = $request->input('item_number'); //$_POST['item_number'];
+		$data['payment_status'] = $request->input('payment_status'); //$_POST['payment_status'];
+		$data['payment_amount'] = $request->input('mc_gross'); //$_POST['mc_gross'];
+		$data['payment_currency'] = $request->input('mc_currency'); //$_POST['mc_currency'];
+		$data['txn_id'] = $request->input('txn_id'); //$_POST['txn_id'];
+		$data['receiver_email'] = $request->input('receiver_email'); //$_POST['receiver_email'];
+		$data['payer_email'] = $request->input('payer_email'); //$_POST['payer_email'];
+		$data['custom'] = $request->input('custom'); //$_POST['custom'];
 
 		// post back to PayPal system to validate
 		$header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
