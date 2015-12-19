@@ -7,3 +7,4 @@ require_once 'fb.php';
 Route::post('auth/login', 'AuthenticateController@authenticate');
 Route::post('auth/register', 'UsersController@create');
 Route::get('/logout', 'UsersController@logout');
+Route::post('/payment/done', 'PaypalController@create');
