@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use DB;
+use Illuminate\Http\Request;
+use Input;
 
 class PaypalController extends Controller {
 
@@ -32,9 +35,16 @@ class PaypalController extends Controller {
 		$data['custom'] = $request->input('custom'); //$_POST['custom'];
 
 		// post back to PayPal system to validate
-		$header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
+		// $header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
+		// $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
+		// $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
+		$header = "POST /cgi-bin/webscr HTTP/1.1\r\n";
+		$header .= "Host: www.sanbox.paypal.com\r\n";
+		$header .= "Accept: */*\r\n";
+		$header .= "Connection: Close\r\n";
+		$header .= "Content-Length: " . strlen($req) . "\r\n";
 		$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-		$header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
+		$header .= "\r\n";
 
 		$fp = fsockopen('ssl://www.sandbox.paypal.com', 443, $errno, $errstr, 30);
 
@@ -46,6 +56,7 @@ class PaypalController extends Controller {
 			while (!feof($fp)) {
 				$res = fgets($fp, 1024);
 				if (strcmp($res, "VERIFIED") == 0) {
+					error_log('message');
 
 					// Used for debugging
 					// mail('user@domain.com', 'PAYPAL POST - VERIFIED RESPONSE', print_r($post, true));
@@ -58,6 +69,7 @@ class PaypalController extends Controller {
 						$user = DB::table('users')->where('email', $data['payer_email'])
 							->first();
 						if (!$user) {
+							error_log('message');
 							return 'No user found';
 						}
 
@@ -73,25 +85,31 @@ class PaypalController extends Controller {
 							->update(array(
 								'balance' => $data['payment_amount'],
 							));
+						error_log('wrong transaction 4');
 						if ($orderid) {
 							// Payment has been made & successfully inserted into the Database
 						} else {
 							// Error inserting into DB
 							// E-mail admin or alert user
 							// mail('user@domain.com', 'PAYPAL POST - INSERT INTO DB WENT WRONG', print_r($data, true));
+							error_log('wrong transaction 3');
 						}
 					} else {
 						// Payment made but data has been changed
 						// E-mail admin or alert user
+						error_log('wrong transaction 2');
 					}
 
 				} else if (strcmp($res, "INVALID") == 0) {
-
+					error_log('wrong transaction');
 					// PAYMENT INVALID & INVESTIGATE MANUALY!
 					// E-mail admin or alert user
 
 					// Used for debugging
 					//@mail("user@domain.com", "PAYPAL DEBUGGING", "Invalid Response<br />data = <pre>".print_r($post, true)."</pre>");
+				} else {
+					error_log($res);
+
 				}
 			}
 			fclose($fp);
