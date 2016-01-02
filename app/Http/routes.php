@@ -16,6 +16,7 @@
 
 require_once 'routes/index.php';
 Route::get('/reset_password/{params}', 'ResetPassword@create');
+Route::get('/verify/{params}', 'ResetPassword@verify');
 function fbpp($string, $img = false) {
 	$name = explode("/", "$string")[3];
 	if ($img) {

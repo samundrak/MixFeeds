@@ -10,6 +10,7 @@ use DB;
 use Hash;
 use Illuminate\Http\Request;
 use Input;
+use Mail;
 use Redirect;
 use Validator;
 
@@ -54,6 +55,16 @@ class UsersController extends Controller {
 					"created_at" => \Carbon\Carbon::now(),
 					"updated_at" => \Carbon\Carbon::now(),
 				));
+			$hashed = sha1(md5(sha1(md5(Input::get('email'))))) . time();
+			DB::table('users')
+				->where('email', Input::get('email'))
+				->update(array(
+					'hash_email' => $hashed,
+				)
+				);
+			Mail::send("mail.verify", ["hash" => $hashed], function ($message) {
+				$message->to(Input::get('email'), Input::get('email'))->subject('Verify Email');
+			});
 			return Utils::response(1, "Register Successfully", ["path" => "/#/login"]);
 		}
 

@@ -92,7 +92,13 @@ widgets['{{fbpp($page)}}'] ='<div style="display:none;" id="{{fbpp($page)}}"><di
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=972492646144125";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(document, 'script', 'facebook-jssdk'));
+
+if(window.location.hostname != '{{ $data->domain}}'){
+	$("body").html('<p>Unauthorized Request from unknown Domain</p>');
+	// document.getElementsByTagName('body').innerHTML = '<p>Unauthorized Request from unknown Domain</p>';
+}
+ </script>
 
 	<script>$('#container').scrollable({'vertical' : 'true'});</script>
 </body>

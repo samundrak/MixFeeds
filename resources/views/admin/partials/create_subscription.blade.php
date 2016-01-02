@@ -10,15 +10,15 @@
 	</li>
 	<li class="list-group-item">
 	Subscription Price
-	<input required type="number" ng-model="create.price" class="form-control"/>
+	<input required type="text" ng-model="create.price" class="form-control"/>
 	</li>
 	<li class="list-group-item">
 	Total Allowed Widgets
-	<input required type="number" ng-model="create.widgets" class="form-control"/>
+	<input required type="text" ng-model="create.widgets" class="form-control"/>
 	</li>
 	<li class="list-group-item">
 	 Total Allowed Pages
-	 <input required type="number" ng-model="create.pages" class="form-control"/>
+	 <input required type="text" ng-model="create.pages" class="form-control"/>
 	</li>
 
 	<li class="list-group-item">

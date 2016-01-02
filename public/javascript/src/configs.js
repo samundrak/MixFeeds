@@ -134,4 +134,31 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
             cfpLoadingBarProvider.includeSpinner = false;
             cfpLoadingBarProvider.latencyThreshold = 10;
         }
-    ])
+    ]);
+function configureTemplateFactory($provide) {
+    // Set a suffix outside the decorator function 
+    var cacheBuster = Date.now().toString();
+
+    function templateFactoryDecorator($delegate) {
+    var fromUrl = angular.bind($delegate, $delegate.fromUrl);
+    $delegate.fromUrl = function (url, params) {
+        if (url !== null && angular.isDefined(url)) {
+            if (typeof url == 'function') {
+                url = url.call(url, params);
+            }
+            if (angular.isString(url)) {
+             url += (url.indexOf("?") === -1 ? "?" : "&");
+             url += "v=" + Date.now().toString();
+             }
+         }
+
+         return fromUrl(url, params);
+     };
+
+     return $delegate;
+}
+
+    $provide.decorator('$templateFactory', ['$delegate', templateFactoryDecorator]);
+}
+
+app.config(['$provide', configureTemplateFactory]);

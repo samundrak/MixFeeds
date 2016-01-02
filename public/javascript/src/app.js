@@ -5,7 +5,7 @@ var $global = {
 }
 
 function getHomePartialsTemplate(path) {
-    return "/views/home/partials/" + path;
+    return "/views/home/partials/" + path + "?t=" + 'Date.now()';
 }
 var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnimate', 'ngMessages', 'ngSanitize'])
 
@@ -78,7 +78,6 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
 .controller('widgetsCtrl', ['$scope', '$http', '$rootScope', 'notify',
     function($scope, $http, $rootScope, notify) {
-
         $scope.deleteWidget = function(item) {
             if (!confirm("Are you sure you want to delete this widget")) return;
             $scope.response_message = undefined;
@@ -106,8 +105,8 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     var res = report.data.data;
                     var size = JSON.parse(JSON.parse(res.settings).size);
 
-                    var w = size.responsive ? 'auto' : size.width;
-                    var h = size.responsive ? 'auto' : size.height;
+                    var w = size.responsive ? '100%' : size.width;
+                    var h = size.responsive ? '100%' : size.height;
 
                     var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
                     $scope.code = code;
@@ -121,7 +120,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
             });
         }
 
-        function loadWidgets(data) {
+        $scope.loadWidgets = function(data) {
             var path = '/api/widgets/get';
             if (data) path = '/api/widgets/get?dest=' + data.desc;
             $http.get(path).then(function(report) {
@@ -134,7 +133,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 notify($global.error.network);
             });
         }
-        loadWidgets();
+        $scope.loadWidgets();
         $rootScope.$on('paginationClicked', function(type, data) {
             loadWidgets({
                 desc: data.clicked
@@ -161,7 +160,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 $scope.widget.pagesCounter.push('http://www.facebook.com/');
             }
             $scope.removeFacebookPages = function(index) {
-                if (index === 0) return notify(['You must have atleast one page']);
+                if ($scope.widget.pagesCounter.length === 1) return notify(['You must have atleast one page']);
                 $scope.widget.pagesCounter.splice(index, 1);
             }
             $scope.createWidget = function() {

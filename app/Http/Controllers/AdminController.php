@@ -50,6 +50,11 @@ class AdminController extends Controller {
 	 */
 	public function show($id) {
 		//
+		$data = DB::table('plans')
+			->join('plan_descs', 'plans.id', '=', 'plan_descs.plan_id')
+			->where('plans.id', $id)
+			->get();
+		return ["success" => 1, "data" => $data];
 	}
 
 	/**
@@ -163,6 +168,46 @@ class AdminController extends Controller {
 		return Utils::response(1, "Action has been taken");
 	}
 
+	public function editSubscription($id, Request $request) {
+		$rules = [
+			"name" => "required",
+			"pages" => "required",
+			"points" => "required",
+			"price" => "required",
+			"settings" => "required",
+			"widgets" => "required",
+		];
+
+		$validator = Validator::make($request->all(), $rules);
+		if (!$validator->passes()) {
+			return Utils::response(0, Utils::getFormatedErrorMessages($validator->messages()));
+		}
+
+		DB::table('plans')
+			->where('id', $id)
+			->update([
+				"amount" => $request->input('price'),
+				"plan" => $request->input('name'),
+				"active" => '0',
+				"creator" => Auth::user()->id,
+				"validate" => '2015-11-03',
+			]);
+
+		// if (empty($id)) {
+		// return Utils::response(0, "Sorry unable to create widgets");
+		// }
+		error_log($id);
+		DB::table('plan_descs')
+			->where('plan_id', $id)
+			->update([
+				"points" => json_encode($request->input('points')),
+				"widgets" => $request->input('widgets'),
+				"pages" => $request->input('pages'),
+				"settings" => json_encode($request->input('settings')),
+				"plan_id" => $id,
+			]);
+		return ["success" => 0, "message" => "Subscription plan has been updated"];
+	}
 	public function subscriptionCreate(Request $request) {
 		$rules = [
 			"name" => "required",

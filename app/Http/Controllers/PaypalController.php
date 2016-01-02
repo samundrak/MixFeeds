@@ -54,8 +54,8 @@ class PaypalController extends Controller {
 		} else {
 			fputs($fp, $header . $req);
 			while (!feof($fp)) {
-				$res = fgets($fp, 1024);
-				if (strcmp($res, "VERIFIED") == 0) {
+				$res = stream_get_contents($fp, 2048);
+				if (stristr($res, "VERIFIED")) {
 					error_log('message');
 
 					// Used for debugging
@@ -100,7 +100,7 @@ class PaypalController extends Controller {
 						error_log('wrong transaction 2');
 					}
 
-				} else if (strcmp($res, "INVALID") == 0) {
+				} else if (stristr($res, "INVALID")) {
 					error_log('wrong transaction');
 					// PAYMENT INVALID & INVESTIGATE MANUALY!
 					// E-mail admin or alert user
@@ -108,7 +108,7 @@ class PaypalController extends Controller {
 					// Used for debugging
 					//@mail("user@domain.com", "PAYPAL DEBUGGING", "Invalid Response<br />data = <pre>".print_r($post, true)."</pre>");
 				} else {
-					error_log($res);
+					error_log($res . 'me k cha');
 
 				}
 			}

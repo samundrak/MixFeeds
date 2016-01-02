@@ -24,6 +24,17 @@ class ResetPassword extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
+	public function verify($email) {
+		$exists = DB::table('users')->where('hash_email', $email)->first();
+		if ($exists) {
+			DB::table('users')->where('id', $exists->id)->update(['is_verified' => 1]);
+			return 'Your account has been verified. <a href="/#/login">Click Here</a> to login.';
+			// return Redirect::to('/#/login');
+		} else {
+			return 'Sorry ! Unauthentic access ';
+		}
+	}
+
 	public function create($email) {
 		//
 

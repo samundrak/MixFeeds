@@ -48,7 +48,7 @@ class WidgetsController extends Controller {
 		//
 		error_log($request->input('widget_i'));
 		$validator = [
-			"widget_name" => "required|min:2|alpha_num",
+			"widget_name" => "required|min:2",
 			"pages" => "required",
 			"display" => "required",
 			"size" => "required",

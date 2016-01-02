@@ -28,6 +28,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 url: '/admin/widgets',
                 templateUrl: '/views/admin/partials/widgets',
             })
+            .state('adminSubscription.edit',{
+                url :'/edit/:id',
+                templateUrl: '/views/admin/partials/create_subscription',
+                controller:'AdminSubscriptionEditCtrl'
+            })
     }
 ])
     .controller('AdminusersController', ['$scope', '$http', 'notify',
@@ -184,3 +189,43 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 
         }
     ])
+    .controller('AdminSubscriptionEditCtrl', ['$scope','$stateParams','$http','notify', function ($scope,$stateParams,$http,notify) {
+        
+        $scope.loadWidgetDetails = function(){
+        $http.get('/api/admin/subscriptions/'+$stateParams.id)
+        .then(function(report){
+            if(report.data.success){
+                if(report.data.data.length){
+                    var data = report.data.data[0];
+                    $scope.create = data;
+                    $scope.create.name = data.plan;
+                    $scope.create.price = data.amount;
+                    $scope.create.points = JSON.parse(data.points);
+                    $scope.create.settings = JSON.parse(data.settings);
+                    console.log($scope.create);
+                }
+            }
+        })  
+        .catch(function(err){
+
+        })  ; 
+        }
+    
+    $scope.createWidget = function() {
+                $http.post('/api/admin/subscriptions/edit/'+ $stateParams.id, $scope.create)
+                    .then(function(report) {
+                        if (report.data.success) {
+                            $scope.create = {
+                                points: ['']
+                            }
+                        } else {
+
+                        }
+                        return notify(report.data.message);
+                    })
+                    .catch(function(error) {
+                        alert(error);
+                    });
+            }
+        $scope.loadWidgetDetails()
+    }])

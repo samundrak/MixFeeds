@@ -13,7 +13,13 @@
 	<ui-view>
 	<ul class="list-group">
 		<li class="list-group-item active">
-		Account Details</li>
+		<div class="row">
+		<div class="col-md-10">Widgets Details</div>
+		<div class="col-md-2"  >
+		<button class="btn btn-success" ng-click="loadWidgets()" >Refresh</button>
+		</div>
+</div>
+		</li>
 		<li ng-repeat="widget in widgets.data" class="list-group-item">
 			<label>Name: </label> @{{ widget.widget_name}}
 			<br/>

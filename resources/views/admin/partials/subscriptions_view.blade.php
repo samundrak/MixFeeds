@@ -32,6 +32,9 @@
 		<td>
 		<input type="button" ng-click="startAction(plan,$index)" class="btn btn-default" value="Submit"/>
 		</td>
+		<td>
+		<input type="button" ui-sref="adminSubscription.edit({id:plan.plan_id})"  class="btn btn-success" value="Edit"/>
+		</td>
 	</tr>
 	</table>
 	</li>
