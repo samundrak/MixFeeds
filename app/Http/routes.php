@@ -27,18 +27,23 @@ function fbpp($string, $img = false) {
 
 function getWidthHeight($data, $props) {
 	if (property_exists($data, 'responsive')) {
-		if ($data->responsive === '1') {
-			return '1';
+		if ($data->responsive == '1') {
+			error_log('this must be respon');
+			return '';
+		} else {
+			if ($props === 'width') {
+				if (property_exists($data, $props)) {
+					return $data->width == '0' ? '' : $data->width;
+				}
+			}
+
+			if ($props === 'height') {
+				if (property_exists($data, $props)) {
+					return $data->height == '0' ? '' : $data->height;
+				}
+			}
 		}
 	}
-	if ($props === 'width') {
-		if (property_exists($data, $props)) {
-			return $data->width === '0' ? '' : $data->width;
-		}
-	} else if ($props === 'height') {
-		if (property_exists($data, $props)) {
-			return $data->height === '0' ? '' : $data->height;
-		}
-	}
+
 	return '';
 }

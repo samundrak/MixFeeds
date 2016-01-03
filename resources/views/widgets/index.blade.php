@@ -5,6 +5,9 @@
 		background-color:gray;
 	}
 </style>
+<script type="text/javascript">
+
+</script>
 <script type="text/javascript" src="{{ URL::asset('/public/javascript/src/jquery.tools.min.js')}}"></script>
 
 <div class="widget-00vfe-main">
@@ -30,7 +33,7 @@
 
 		<div class="widget-00vfe-left-bottom"><a href="#" id="next" class="next"><img class="img-ac" src="../../../public/widget/images/bottom-arrow.png"></a></div>
 	</div>
-	<div class="widget-00vfe-right tab-content">
+	<div  onmouseover="rotation('stop')" onmouseout="rotation('start')" class="widget-00vfe-right tab-content">
 		<div class="widgetHere" id="img_{{fbpp($page)}}"></div>
 
 	</div>
@@ -40,7 +43,6 @@
 </div>
 
 </div>
-
 <script type="text/javascript">
 function viewWidgets(item){
 		widgetsIds.forEach(function (post) {
@@ -68,22 +70,21 @@ widgets['{{fbpp($page)}}'] ='<div style="display:none;" id="{{fbpp($page)}}"><di
     widgets = undefined;
 @endforelse
 
-(function(){
+function showPosts(index){
 		if(widgetsIds.length){
 			for(var key in widgets){
 			$(".widgetHere").append(widgets[key]);
 					$("#li_"+key).css("opacity","0.5");
-			if(widgetsIds[0] === key)
+			if(widgetsIds[index] === key)
 				{
-					console.log(widgetsIds[0])
-					console.log(key)
 					$("#"+key).css("display","block");
 
 					$("#li_"+key).css("opacity","1");
 				}
 			}
 		}
-})();
+}
+showPosts(0);
 </script>
 <div id="fb-root"></div>
  <script>(function(d, s, id) {
@@ -95,9 +96,42 @@ widgets['{{fbpp($page)}}'] ='<div style="display:none;" id="{{fbpp($page)}}"><di
 }(document, 'script', 'facebook-jssdk'));
 
 if(window.location.hostname != '{{ $data->domain}}'){
-	$("body").html('<p>Unauthorized Request from unknown Domain</p>');
-	// document.getElementsByTagName('body').innerHTML = '<p>Unauthorized Request from unknown Domain</p>';
+	// $("body").html('<p>Unauthorized Request from unknown Domain</p>');
 }
+var state = true;
+var settings =  JSON.parse('{!! (json_encode($data->settings)) !!}');
+if(settings.hasOwnProperty('display')){
+	if(settings.display.hasOwnProperty('type')){
+		if(settings.display.type === 'rotate'){
+			if(settings.display.hasOwnProperty('seconds')){
+				var anime = true;
+				var c = 1;
+				if(widgetsIds.length > 1){
+					setInterval(function(){
+						if(!state) return;
+						if(widgetsIds.length){
+							showPosts(c);
+							viewWidgets(widgetsIds[c]);
+						}
+						c++;
+						if(c >= widgetsIds.length) c = 0;
+
+					},parseInt(settings.display.seconds + '000'));
+				}
+			}
+		}
+	}
+}
+
+function rotation(type){
+	if(type ==='start'){
+		 state = true;
+	}
+	if(type ==='stop'){
+		 state = false;
+	}
+}
+
  </script>
 
 	<script>$('#container').scrollable({'vertical' : 'true'});</script>
