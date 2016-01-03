@@ -413,7 +413,12 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
                 $http.post('/auth/register', data).then(function(report) {
                     if (report.data.success) {
-                        window.location.href = report.data.data.path;
+                        notify("Thank you for Registration . We send you a verification mail on your mail id, please confirm your registration",function(){
+                            window.setTimeout(function(){
+                                window.location.href = report.data.data.path;
+                            }, 2000);
+                        });
+                        // window.location.href = report.data.data.path;
                     } else {
                         notify(report.data.message)
                     }
@@ -429,6 +434,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
                 $http.post('/auth/login', data).then(function(report) {
                     if (report.data.success) {
+                        // notify
                         window.location.href = report.data.data.path;
                     } else {
                         notify(report.data.message);

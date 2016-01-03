@@ -65,7 +65,8 @@ class SubscriptionsController extends Controller {
 		//
 		$data = DB::table('plans')->where('id', $request->input('plan'))
 			->first();
-		if ((Auth::user()->balance - $data->amount) > 0) {
+		error_log($data->amount);
+		if ((Auth::user()->balance - $data->amount) > 0 || ($data->amount == 0)) {
 			$exist = DB::table('subscription')
 				->where('end', ">=", date("Y-m-d"))
 				->where('end', "<=", date("Y-m-d", strtotime(" +30 days ")))
@@ -93,7 +94,7 @@ class SubscriptionsController extends Controller {
 				return ["message" => "You have already subscribed to a plan for this month", "success" => 0];
 			}
 		} else {
-			return ["message" => "Your dont enough balance to subscribe", "success" => 0];
+			return ["message" => "Your dont have enough balance to subscribe", "success" => 0];
 		}
 	}
 
