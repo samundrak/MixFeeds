@@ -96,7 +96,7 @@ showPosts(0);
 }(document, 'script', 'facebook-jssdk'));
 
 if(window.location.hostname != '{{ $data->domain}}'){
-	// $("body").html('<p>Unauthorized Request from unknown Domain</p>');
+	$("body").html('<p>Unauthorized Request from unknown Domain</p>');
 }
 var state = true;
 var settings =  JSON.parse('{!! (json_encode($data->settings)) !!}');
