@@ -187,7 +187,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
                     var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
                     if(preview){
-                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 600 + 'px" ></iframe>';
+                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 530 + 'px" ></iframe>';
                     }
                     $scope.code = code;
                     $("#codeView").modal();
