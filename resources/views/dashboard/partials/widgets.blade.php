@@ -52,7 +52,7 @@
 			<div ng-if="!preview">
 				<h4 class="modal-title" id="codeViewLabel">Widget Code</h4>
 				<label> Copy paste the code into your website,where you want to display widget</label>
-				<textarea ng-model="code" width="auto" height="auto" class="form-control"></textarea>
+				<textarea ng-model="code" width="auto" rows="5" class="form-control"></textarea>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>

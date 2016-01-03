@@ -109,6 +109,9 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     var h = size.responsive ? '100%' : size.height;
 
                     var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    if(preview){
+                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 600 + 'px" ></iframe>';
+                    }
                     $scope.code = code;
                     $("#codeView").modal();
                     $("#me").html(code);
@@ -163,7 +166,41 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 if ($scope.widget.pagesCounter.length === 1) return notify(['You must have atleast one page']);
                 $scope.widget.pagesCounter.splice(index, 1);
             }
-            $scope.createWidget = function() {
+            
+            $scope.getCode = function(id, preview) {
+                $scope.createWidget(function(data){
+                $scope.preview = preview || false;
+                id =  $stateParams.id;
+                if($state.current.name === 'widgets.create'){
+                if(data.hasOwnProperty('data')){
+                    if(data.data.hasOwnProperty('id')) id = data.data.id;
+                }
+
+                }
+                $http.get('/api/widgets/get/' + id).then(function(report) {
+                    if (report.data.success) {
+                        var res = report.data.data;
+                        var size = JSON.parse(JSON.parse(res.settings).size);
+
+                    var w = size.responsive ? '100%' : size.width;
+                    var h = size.responsive ? '100%' : size.height;
+
+                    var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    if(preview){
+                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 600 + 'px" ></iframe>';
+                    }
+                    $scope.code = code;
+                    $("#codeView").modal();
+                    $("#me").html(code);
+                } else {
+                    notify([report.data.message]);
+                }
+            }, function(error) {
+                notify($global.error.network);
+            });
+         });
+        }
+            $scope.createWidget = function(cb) {
                 $scope.widget.alert = {};
                 var data = {};
                 data.widget_name = $scope.widget.widget_name || null;
@@ -178,6 +215,8 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 data.state = $state.current.name
                 if ($state.current.name === 'widgets.edit') {
                     data.widget_id = $stateParams.id;
+                }else{
+                    if(cb) data.save = 0;
                 }
 
                 $http.post('/api/widgets/create', data).then(function(report) {
@@ -200,8 +239,10 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                         // msg = [report.data.message];
                         // }
 
+                    }else{
+                        if(cb)cb(report.data);
                     }
-                    return notify(report.data.message);
+                    if(!cb)return notify(report.data.message);
                 }, function(error) {
                     notify($global.error.network);
                 });

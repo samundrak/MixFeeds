@@ -84,6 +84,7 @@
 						<label>.</label>
 						<div class="fb-page-box-1">
 							<input  class="getcode" type="submit" value="Save">
+							<input style="margin-left:5px"  class="getcode" type="button" value="Preview" ng-click="getCode(null,true)">
 						</div>
 					</div>
 				</form>
@@ -109,3 +110,22 @@
 		</script>
 	</li>
 </ul>
+<div style="color:black;" class="modal fade" id="codeView" tabindex="-1" role="dialog" aria-labelledby="codeViewLabel">
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<div ng-if="!preview">
+				<h4 class="modal-title" id="codeViewLabel">Widget Code</h4>
+				<label> Copy paste the code into your website,where you want to display widget</label>
+				<textarea ng-model="code" width="auto" rows="5" class="form-control"></textarea>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+			<div ng-if="preview">
+				<display-widget id="me" code="code"></display-widget>
+			</div>
+		</div>
+	</div>
+</div>

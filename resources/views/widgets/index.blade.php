@@ -87,7 +87,22 @@ function showPosts(index){
 showPosts(0);
 </script>
 <div id="fb-root"></div>
- <script>(function(d, s, id) {
+ <script>
+// Read a page's GET URL variables and return them as an associative array.
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+ (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
@@ -95,9 +110,19 @@ showPosts(0);
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+(function(){
+
 if(window.location.hostname != '{{ $data->domain}}'){
+	// if()
+	var query =getUrlVars();
+	if(query.length){
+		if(query['preview']){
+			return;
+		}
+	}
 	$("body").html('<p>Unauthorized Request from unknown Domain</p>');
 }
+})();
 var state = true;
 var settings =  JSON.parse('{!! (json_encode($data->settings)) !!}');
 if(settings.hasOwnProperty('display')){

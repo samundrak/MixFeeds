@@ -21,6 +21,7 @@ class WidgetsController extends Controller {
 		//
 		$limit = empty(Input::get('limit')) ? 5 : Input::get('limit');
 		$widgets = DB::table('widgets')
+			->where('save', 1)
 			->where('creator', Auth::user()->id)
 			->orderBy('id', 'desc')
 			->limit($limit);
@@ -45,8 +46,6 @@ class WidgetsController extends Controller {
 	 * @return Response
 	 */
 	public function create(Request $request) {
-		//
-		error_log($request->input('widget_i'));
 		$validator = [
 			"widget_name" => "required|min:2",
 			"pages" => "required",
@@ -63,7 +62,14 @@ class WidgetsController extends Controller {
 		if ($validator->fails()) {
 			return json_encode(["success" => 0, "message" => $validator->messages()->toJson()]);
 		}
-
+		$save = 1;
+		if ($request->input('save') === 0) {
+			DB::table('widgets')
+				->where('creator', Auth::user()->id)
+				->where('save', '0')
+				->delete();
+			$save = 0;
+		}
 		$settings = json_encode(array(
 			"size" => json_encode($request->input('size')),
 			"show_friends_face" => $request->input('show_friends_face'),
@@ -112,11 +118,12 @@ class WidgetsController extends Controller {
 				return json_encode(["success" => 0, "message" => "You can't create more widgets"]);
 			}
 			$vals['token'] = md5(time() . Auth::user()->id);
+			$vals['save'] = $save;
 			$id = DB::table('widgets')
 				->insertGetId($vals);
 
 			if ($id) {
-				return json_encode(["success" => 1, "message" => "New widget has been created successfully"]);
+				return json_encode(["success" => 1, "message" => "New widget has been created successfully", "data" => ["id" => $id]]);
 			}
 		} else if ($request->input('state') === 'widgets.edit') {
 			// error_log($request->input('widget_id'));
