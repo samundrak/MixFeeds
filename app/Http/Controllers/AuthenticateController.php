@@ -108,6 +108,10 @@ class AuthenticateController extends Controller {
 				if ($code === '3') {
 					return Utils::response(0, "Your account has been deleted");
 				}
+				if ($code === '0') {
+					return Utils::response(0, "Your account is not verified");
+				}
+
 				return Utils::response(1, "Welcome", ["path" => "/dashboard/home"]);
 			} else {
 

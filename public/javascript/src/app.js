@@ -78,6 +78,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
 .controller('widgetsCtrl', ['$scope', '$http', '$rootScope', 'notify',
     function($scope, $http, $rootScope, notify) {
+        
         $scope.deleteWidget = function(item) {
             if (!confirm("Are you sure you want to delete this widget")) return;
             $scope.response_message = undefined;
@@ -147,6 +148,10 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 ])
     .controller('widgetsCreateEditCtrl', ['$scope', '$http', '$stateParams', '$state', 'notify', 'profile',
         function($scope, $http, $stateParams, $state, notify, profile) {
+            $scope.ifOnEdit =  false;
+            if ($state.current.name === 'widgets.edit') {
+                $scope.ifOnEdit =  true;
+            }
             profile.call().then(function(promise) {
                 $scope.profile = promise;
             });

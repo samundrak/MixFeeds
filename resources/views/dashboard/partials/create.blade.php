@@ -6,7 +6,7 @@
 				<form  class="form-widget" method="post" ng-submit="createWidget()">
 					<div class="row-group">
 						<label>Widget Name:</label>
-						<input   class="fdin" type="text" ng-model="widget.widget_name" />
+						<input ng-disabled="ifOnEdit"   class="fdin" type="text" ng-model="widget.widget_name" />
 					</div>
 					<div class="row-group">
 						<label>Facebook Pages:</label>
@@ -77,7 +77,7 @@
 					<div class="row-group margin-top-10">
 						<label>Domain to be embedded at:</label>
 						<div class="fb-page-box-1">
-							<input  class="section-input-domain" type="url" ng-model="widget.settings.domain">
+							<input  class="section-input-domain" type="url" ng-disabled="ifOnEdit" ng-model="widget.settings.domain">
 						</div>
 					</div>
 					<div class="row-group margin-top-30">
