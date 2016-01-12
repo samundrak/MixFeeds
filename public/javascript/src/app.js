@@ -77,80 +77,80 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 ])
 
 .controller('widgetsCtrl', ['$scope', '$http', '$rootScope', 'notify',
-    function($scope, $http, $rootScope, notify) {
-        
-        $scope.deleteWidget = function(item) {
-            if (!confirm("Are you sure you want to delete this widget")) return;
-            $scope.response_message = undefined;
-            if (item < 0) return;
-            if (!$scope.widgets.data[item]) return;
-            return $http.delete('/api/widgets/delete/' + $scope.widgets.data[item].id).then(function(report) {
-                if (report.data.success) {
-                    notify(report.data.message);
-                    $scope.widgets.data.splice(item, 1);
-                } else {
-                    notify([report.data.message]);
-                }
-            }, function(error) {
-                notify($global.error.network);
-            });
-        }
+        function($scope, $http, $rootScope, notify) {
 
-
-        $scope.getCode = function(id, preview) {
-            $scope.preview = preview || false;
-            if (!id) return;
-
-            $http.get('/api/widgets/get/' + id).then(function(report) {
-                if (report.data.success) {
-                    var res = report.data.data;
-                    var size = JSON.parse(JSON.parse(res.settings).size);
-
-                    var w = size.responsive ? '100%' : size.width;
-                    var h = size.responsive ? '100%' : size.height;
-
-                    var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
-                    if(preview){
-                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 550 + 'px" ></iframe>';
+            $scope.deleteWidget = function(item) {
+                if (!confirm("Are you sure you want to delete this widget")) return;
+                $scope.response_message = undefined;
+                if (item < 0) return;
+                if (!$scope.widgets.data[item]) return;
+                return $http.delete('/api/widgets/delete/' + $scope.widgets.data[item].id).then(function(report) {
+                    if (report.data.success) {
+                        notify(report.data.message);
+                        $scope.widgets.data.splice(item, 1);
+                    } else {
+                        notify([report.data.message]);
                     }
-                    $scope.code = code;
-                    $("#codeView").modal();
-                    $("#me").html(code);
-                } else {
-                    notify([report.data.message]);
-                }
-            }, function(error) {
-                notify($global.error.network);
-            });
-        }
+                }, function(error) {
+                    notify($global.error.network);
+                });
+            }
 
-        $scope.loadWidgets = function(data) {
-            var path = '/api/widgets/get';
-            if (data) path = '/api/widgets/get?dest=' + data.desc;
-            $http.get(path).then(function(report) {
-                if (report.data.success) {
-                    $scope.widgets = report.data;
-                } else {
-                    notify(report.data.message);
-                }
-            }, function(error) {
-                notify($global.error.network);
-            });
-        }
-        $scope.loadWidgets();
-        $rootScope.$on('paginationClicked', function(type, data) {
-            loadWidgets({
-                desc: data.clicked
-            });
-        });
 
-    }
-])
+            $scope.getCode = function(id, preview) {
+                $scope.preview = preview || false;
+                if (!id) return;
+
+                $http.get('/api/widgets/get/' + id).then(function(report) {
+                    if (report.data.success) {
+                        var res = report.data.data;
+                        var size = JSON.parse(JSON.parse(res.settings).size);
+
+                        var w = size.responsive ? '100%' : size.width;
+                        var h = size.responsive ? '100%' : size.height;
+
+                        var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                        if (preview) {
+                            code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 550 + 'px" ></iframe>';
+                        }
+                        $scope.code = code;
+                        $("#codeView").modal();
+                        $("#me").html(code);
+                    } else {
+                        notify([report.data.message]);
+                    }
+                }, function(error) {
+                    notify($global.error.network);
+                });
+            }
+
+            $scope.loadWidgets = function(data) {
+                var path = '/api/widgets/get';
+                if (data) path = '/api/widgets/get?dest=' + data.desc;
+                $http.get(path).then(function(report) {
+                    if (report.data.success) {
+                        $scope.widgets = report.data;
+                    } else {
+                        notify(report.data.message);
+                    }
+                }, function(error) {
+                    notify($global.error.network);
+                });
+            }
+            $scope.loadWidgets();
+            $rootScope.$on('paginationClicked', function(type, data) {
+                loadWidgets({
+                    desc: data.clicked
+                });
+            });
+
+        }
+    ])
     .controller('widgetsCreateEditCtrl', ['$scope', '$http', '$stateParams', '$state', 'notify', 'profile',
         function($scope, $http, $stateParams, $state, notify, profile) {
-            $scope.ifOnEdit =  false;
+            $scope.ifOnEdit = false;
             if ($state.current.name === 'widgets.edit') {
-                $scope.ifOnEdit =  true;
+                $scope.ifOnEdit = true;
             }
             profile.call().then(function(promise) {
                 $scope.profile = promise;
@@ -171,40 +171,40 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 if ($scope.widget.pagesCounter.length === 1) return notify(['You must have atleast one page']);
                 $scope.widget.pagesCounter.splice(index, 1);
             }
-            
+
             $scope.getCode = function(id, preview) {
-                $scope.createWidget(function(data){
-                $scope.preview = preview || false;
-                id =  $stateParams.id;
-                if($state.current.name === 'widgets.create'){
-                if(data.hasOwnProperty('data')){
-                    if(data.data.hasOwnProperty('id')) id = data.data.id;
-                }
+                $scope.createWidget(function(data) {
+                    $scope.preview = preview || false;
+                    id = $stateParams.id;
+                    if ($state.current.name === 'widgets.create') {
+                        if (data.hasOwnProperty('data')) {
+                            if (data.data.hasOwnProperty('id')) id = data.data.id;
+                        }
 
-                }
-                $http.get('/api/widgets/get/' + id).then(function(report) {
-                    if (report.data.success) {
-                        var res = report.data.data;
-                        var size = JSON.parse(JSON.parse(res.settings).size);
-
-                    var w = size.responsive ? '100%' : size.width;
-                    var h = size.responsive ? '100%' : size.height;
-
-                    var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
-                    if(preview){
-                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 530 + 'px" ></iframe>';
                     }
-                    $scope.code = code;
-                    $("#codeView").modal();
-                    $("#me").html(code);
-                } else {
-                    notify([report.data.message]);
-                }
-            }, function(error) {
-                notify($global.error.network);
-            });
-         });
-        }
+                    $http.get('/api/widgets/get/' + id).then(function(report) {
+                        if (report.data.success) {
+                            var res = report.data.data;
+                            var size = JSON.parse(JSON.parse(res.settings).size);
+
+                            var w = size.responsive ? '100%' : size.width;
+                            var h = size.responsive ? '100%' : size.height;
+
+                            var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                            if (preview) {
+                                code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 530 + 'px" ></iframe>';
+                            }
+                            $scope.code = code;
+                            $("#codeView").modal();
+                            $("#me").html(code);
+                        } else {
+                            notify([report.data.message]);
+                        }
+                    }, function(error) {
+                        notify($global.error.network);
+                    });
+                });
+            }
             $scope.createWidget = function(cb) {
                 $scope.widget.alert = {};
                 var data = {};
@@ -220,8 +220,8 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                 data.state = $state.current.name
                 if ($state.current.name === 'widgets.edit') {
                     data.widget_id = $stateParams.id;
-                }else{
-                    if(cb) data.save = 0;
+                } else {
+                    if (cb) data.save = 0;
                 }
 
                 $http.post('/api/widgets/create', data).then(function(report) {
@@ -244,10 +244,10 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                         // msg = [report.data.message];
                         // }
 
-                    }else{
-                        if(cb)cb(report.data);
+                    } else {
+                        if (cb) cb(report.data);
                     }
-                    if(!cb)return notify(report.data.message);
+                    if (!cb) return notify(report.data.message);
                 }, function(error) {
                     notify($global.error.network);
                 });
@@ -358,47 +358,47 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 ])
 
 .controller('settingsCtrl', ['$scope', '$http', 'notify',
-    function($scope, $http, notify) {
+        function($scope, $http, notify) {
 
-        $scope.changePassword = function() {
-            var data = {
-                oldPassword: $scope.oldPassword,
-                newPassword: $scope.newPassword,
-                confirmPassword: $scope.confirmPassword
-            }
+            $scope.changePassword = function() {
+                var data = {
+                    oldPassword: $scope.oldPassword,
+                    newPassword: $scope.newPassword,
+                    confirmPassword: $scope.confirmPassword
+                }
 
-            $http.post('/api/user/password/edit', data).then(function(report) {
-                if (report.data.success) {
-                    notify(report.data.message);
-                    window.location.href = "/logout";
-                } else {
-                    notify(report.data.message);
-                }
-            }, function(error) {
-                notify($global.error.network);
-            });
-        }
-        $scope.changeEmail = function() {
-            var data = {
-                oldEmail: $scope.oldEmail,
-                newEmail: $scope.newEmail,
-                password: $scope.password
+                $http.post('/api/user/password/edit', data).then(function(report) {
+                    if (report.data.success) {
+                        notify(report.data.message);
+                        window.location.href = "/logout";
+                    } else {
+                        notify(report.data.message);
+                    }
+                }, function(error) {
+                    notify($global.error.network);
+                });
             }
-            $http.post('/api/user/email/edit', data).then(function(report) {
-                if (report.data.success) {
-                    $scope.oldEmail = $scope.newEmail;
-                    $scope.newEmail = '';
-                    $scope.password = '';
-                    notify(report.data.message);
-                } else {
-                    notify(report.data.message);
+            $scope.changeEmail = function() {
+                var data = {
+                    oldEmail: $scope.oldEmail,
+                    newEmail: $scope.newEmail,
+                    password: $scope.password
                 }
-            }, function(error) {
-                notify($global.error.network);
-            });
+                $http.post('/api/user/email/edit', data).then(function(report) {
+                    if (report.data.success) {
+                        $scope.oldEmail = $scope.newEmail;
+                        $scope.newEmail = '';
+                        $scope.password = '';
+                        notify(report.data.message);
+                    } else {
+                        notify(report.data.message);
+                    }
+                }, function(error) {
+                    notify($global.error.network);
+                });
+            }
         }
-    }
-])
+    ])
     .controller('authCtrl', ['$scope', '$http', 'notify',
         function($scope, $http, notify) {
 
@@ -413,8 +413,8 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
                 $http.post('/auth/register', data).then(function(report) {
                     if (report.data.success) {
-                        notify("Thank you for Registration . We send you a verification mail on your mail id, please confirm your registration",function(){
-                            window.setTimeout(function(){
+                        notify("Thank you for Registration . We send you a verification mail on your mail id, please confirm your registration", function() {
+                            window.setTimeout(function() {
                                 window.location.href = report.data.data.path;
                             }, 2000);
                         });
@@ -451,56 +451,53 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     email: $scope.email
                 }).
                 then(function(report) {
-                    if (report.success) {
+                        if (report.success) {
 
-                        return notify(report.data.message);
-                    } else {
+                            return notify(report.data.message);
+                        } else {
 
-                        return notify([report.data.message]);
-                    }
-                })
+                            return notify([report.data.message]);
+                        }
+                    })
                     .catch(function(error) {
                         notify($global.error.network);
                     });
             }
         }
     ])
-.controller('resetPasswordCtrl', ['$scope','$http','notify','$stateParams', function ($scope,$http,notify,$stateParams) {
-    $scope.resetPassword = function(){
-        if(!$scope.password) return;
-        if(!$stateParams.hasOwnProperty('params')) return;
+    .controller('resetPasswordCtrl', ['$scope', '$http', 'notify', '$stateParams', function($scope, $http, notify, $stateParams) {
+        $scope.resetPassword = function() {
+            if (!$scope.password) return;
+            if (!$stateParams.hasOwnProperty('params')) return;
 
-        var hash =  $stateParams.params;
-        $http.post('/api/user/reset_password',{
-            hash :  hash,
-            password :  $scope.password
-        })
-        .then(function(report){
-            report = report.data;
-            console.log(report);
-            if(report.success){
-                window.location.href="/#/login";
-            }
-            notify(report.message);
-        })
-        .catch(function(error){
-            alert('Some error occured');
-        });
+            var hash = $stateParams.params;
+            $http.post('/api/user/reset_password', {
+                    hash: hash,
+                    password: $scope.password
+                })
+                .then(function(report) {
+                    report = report.data;
+                    console.log(report);
+                    if (report.success) {
+                        window.location.href = "/#/login";
+                    }
+                    notify(report.message);
+                })
+                .catch(function(error) {
+                    alert('Some error occured');
+                });
 
+        }
+    }])
+
+.controller('transactionCtrl', ['$scope', '$http', 'notify', '$stateParams', function($scope, $http, notify, $stateParams) {
+
+    $scope.loadTransaction = function() {
+        $http.get('/api/user/transaction').then(function(report) {
+            $scope.transaction = report.data.data;
+        }).catch(function() {
+
+        })
     }
+    $scope.loadTransaction();
 }])
-
-
-
-function x() {
-    this.name = 'samundra';
-    this.caste = 'kc';
-}
-
-x.prototype.fullname = function(argument) {
-    return this.name + '' + this.caste;
-};
-
-x.prototype.address = 'butwal';
-e = new x();
-console.log(e.__proto__.hasOwnProperty('address'));

@@ -4,7 +4,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 
             $stateProvider.state("home", {
                 url: "/",
-                templateUrl: getHomePartialsTemplate('home')
+                templateUrl: getHomePartialsTemplate('home'),
+                // controller : function($state){
+                    // $state.go('login');
+                // }
             })
                 .state('contact', {
                     url: '/contact',
@@ -67,7 +70,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 .state('account.transaction', {
                     url: '/transaction',
                     templateUrl: '/views/dashboard/partials/transaction',
-                    controller: 'dashboardCtrl'
+                    controller: 'transactionCtrl'
                 })
                 .state('account.subscriptions', {
                     url: '/subscriptions',

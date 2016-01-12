@@ -16,14 +16,6 @@
 						<li ui-sref-active="active">
 							<a ui-sref="home">Home</a>
 						</li>
-						<li ui-sref-active="active">
-							<a ui-sref="contact">Contact</a>
-						</li>
-						 <li ui-sref-active="active">
-							<a ui-sref="content">Content</a>
-						</li><li ui-sref-active="active">
-							<a ui-sref="about">About</a>
-						</li>
 						@if (Auth::check())
 						<li ui-sref-active="active">
 							<a href="/dashboard/home">Dashboard</a>
@@ -40,14 +32,6 @@
 						</li>
 						@endif
 					</ul>
-					<form class="navbar-form navbar-left" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" />
-						</div>
-						<button type="submit" class="btn btn-default">
-							Submit
-						</button>
-					</form>
 
 				</div>
 

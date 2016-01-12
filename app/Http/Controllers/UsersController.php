@@ -29,6 +29,12 @@ class UsersController extends Controller {
 		//
 	}
 
+	public function transaction() {
+		$data = DB::table('transaction')
+			->where('user', Auth::user()->id)
+			->get();
+		return ["success" => 1, "data" => $data];
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *10.1.26.1
