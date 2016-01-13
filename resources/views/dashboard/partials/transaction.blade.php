@@ -4,7 +4,7 @@
 	</li><br/>
 	<li class="list-group-item active"> Your transaction details</li>
 	<li class="list-group-item" ng-if="!transaction.length"> No transaction details found</li>
-			<li class="list-group-item">
+			<li ng-if="transaction.length" class="list-group-item">
 	<table class="table table-striped">
 	<tr>
 		<th>S.N</th>
