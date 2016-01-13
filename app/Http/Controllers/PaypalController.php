@@ -108,7 +108,7 @@ class PaypalController extends Controller {
 		if ($this->response === false || $this->response_status == '0') {
 			$errno = curl_errno($ch);
 			$errstr = curl_error($ch);
-			throw new Exception("cURL error: [$errno] $errstr");
+			$this->out("cURL error: [$errno] $errstr");
 		}
 	}
 
@@ -138,7 +138,7 @@ class PaypalController extends Controller {
 
 		if (!$fp) {
 			// fsockopen error
-			throw new Exception("fsockopen error: [$errno] $errstr");
+			$this->out("fsockopen error: [$errno] $errstr");
 		}
 
 		$header = "POST /cgi-bin/webscr HTTP/1.1\r\n";
@@ -246,6 +246,9 @@ class PaypalController extends Controller {
 		return $r;
 	}
 
+	private function out($data) {
+		echo $data;
+	}
 	/**
 	 *  Process IPN
 	 *
@@ -268,7 +271,7 @@ class PaypalController extends Controller {
 				$this->post_data = $_POST;
 				$encoded_data .= '&' . file_get_contents('php://input');
 			} else {
-				throw new Exception("No POST data found.");
+				$this->out("No POST data found.");
 			}
 		} else {
 			// use provided data array
@@ -286,7 +289,7 @@ class PaypalController extends Controller {
 		}
 
 		if (strpos($this->response_status, '200') === false) {
-			throw new Exception("Invalid response status: " . $this->response_status);
+			$this->out("Invalid response status: " . $this->response_status);
 		}
 
 		if (strpos($this->response, "VERIFIED") !== false) {
@@ -294,7 +297,7 @@ class PaypalController extends Controller {
 		} elseif (strpos($this->response, "INVALID") !== false) {
 			return false;
 		} else {
-			throw new Exception("Unexpected response from PayPal.");
+			$this->out("Unexpected response from PayPal.");
 		}
 	}
 
@@ -308,7 +311,7 @@ class PaypalController extends Controller {
 		// require POST requests
 		if ($_SERVER['REQUEST_METHOD'] && $_SERVER['REQUEST_METHOD'] != 'POST') {
 			header('Allow: POST', true, 405);
-			throw new Exception("Invalid HTTP request method.");
+			$this->out("Invalid HTTP request method.");
 		}
 	}
 
