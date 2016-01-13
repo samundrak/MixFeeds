@@ -1,11 +1,18 @@
 <?php
-
-namespace App\Http\Controllers;
-
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-
-class PaypalController extends Controller {
+/**
+ *  PayPal IPN Listener
+ *
+ *  A class to listen for and handle Instant Payment Notifications (IPN) from
+ *  the PayPal server.
+ *
+ *  https://github.com/Quixotix/PHP-PayPal-IPN
+ *
+ *  @package    PHP-PayPal-IPN
+ *  @author     Micah Carrick
+ *  @copyright  (c) 2012 - Micah Carrick
+ *  @version    2.1.0
+ */
+class IpnListener {
 
 	/**
 	 *  If true, the recommended cURL PHP library is used to send the post back
@@ -309,24 +316,6 @@ class PaypalController extends Controller {
 		if ($_SERVER['REQUEST_METHOD'] && $_SERVER['REQUEST_METHOD'] != 'POST') {
 			header('Allow: POST', true, 405);
 			throw new Exception("Invalid HTTP request method.");
-		}
-	}
-
-	public function create(Request $request) {
-		// $listener = new IpnListener();
-
-		try {
-			$verified = $this->processIpn();
-		} catch (Exception $e) {
-			exit(0);
-		}
-
-		if ($verified) {
-			// IPN response was "VERIFIED"
-			fwrite(fopen("d.json", "w+"), "Done");
-		} else {
-			// IPN response was "INVALID"
-			fwrite(fopen("d.json", "w+"), "not Done");
 		}
 	}
 }
