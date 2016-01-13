@@ -1,18 +1,25 @@
 <div class="row">
-<form ng-submit="resetPassword()">
-	<ul class="list-group-item">
-
-		<li class="list-item">
-		Enter New Passowrd
-		</li>
-		<li class="list-item">
-
-			<input ng-model="password" class="form-control" type="password" ng-model="email"/>
-		</li>
-		<li class="list-item">
-		<br/>
-		<input type="submit" class="btn btn-primary"/>
-		</li>
-	</ul>
-	</form>
+<div class="col-md-3"></div>
+<div class="col-md-6">
+<div class="panel panel-primary">
+<div class="panel-heading padding-10">
+    <h4 class="panel-title-c1" id="codeViewLabel">Reset Password</h4>
 </div>
+<div class="panel-body padding-20">
+<form ng-submit="resetPassword()">
+	
+		<div class="margin-top-10">
+		Enter New Passoword
+			<input ng-model="password" class="form-control" type="password" ng-model="email"/>
+		</div>
+		<div class="margin-top-20">
+		<br/>
+		<input type="submit" value="Submit" class="btn btn-primary"/>
+		</div>
+	
+	</form>
+	</div>
+</div>
+</div>
+<div class="col-md-3"></div>
+</div>	

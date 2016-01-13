@@ -18,6 +18,8 @@
 		<th>Plan ID</th>
 		<th>Created At</th>
 		<th>Action</th>
+		<th></th>
+		<th></th>
 	</tr>
 	<tr ng-repeat="plan in plans">
 		<td>  @{{ plan.plan }} </td>

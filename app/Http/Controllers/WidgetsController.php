@@ -34,7 +34,7 @@ class WidgetsController extends Controller {
 		}
 
 		if (!sizeof($widgets->get())) {
-			return ["success" => 0, "message" => "No any widgets found"];
+			return ["success" => 0, "message" => "No widgets found"];
 		}
 
 		return ["success" => 1, "total" => $total, "data" => $widgets->get()];
@@ -99,7 +99,7 @@ class WidgetsController extends Controller {
 				->first();
 
 			if (!$exist) {
-				return json_encode(["success" => 0, "message" => ["You have n't subscribed to any packaged till."]]);
+				return json_encode(["success" => 0, "message" => ["You haven't subscribed to any packaged till."]]);
 			}
 			$plan = $exist->plan;
 			$restrict = DB::table('plan_descs')
@@ -112,7 +112,7 @@ class WidgetsController extends Controller {
 				->count();
 
 			if ($requestedPages >= $restrict->pages) {
-				return json_encode(["success" => 0, "message" => "You are n't allowed to add more then " . $requestedPages . " pages"]);
+				return json_encode(["success" => 0, "message" => "You aren't allowed to add more then " . $requestedPages . " pages"]);
 			}
 			if ($totalWidgets >= $limitWidgets) {
 				return json_encode(["success" => 0, "message" => "You can't create more widgets"]);
@@ -163,7 +163,7 @@ class WidgetsController extends Controller {
 		//
 		$data = DB::table('widgets')->where('id', $id)->first();
 		if (sizeof($data) < 1) {
-			return ["success" => 0, "message" => "No any widgets founds"];
+			return ["success" => 0, "message" => "No widgets founds"];
 		}
 
 		return ["success" => 1, "data" => $data];
@@ -225,7 +225,7 @@ class WidgetsController extends Controller {
 			->first();
 
 		if (!$subscription) {
-			return 'This Widgets Subscription period has been finished';
+			return 'This Widgets Subscription period has been Experied, Please Renew to continue the service';
 		}
 
 		$data->subscription = $subscription;

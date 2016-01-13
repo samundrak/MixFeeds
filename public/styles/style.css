@@ -35,7 +35,7 @@ body {
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
-
+  background-image: none;
 }
 
 
@@ -81,7 +81,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 h1, h2, h3, h4, h5, h6
 {
   margin: 0px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 ul li{
@@ -91,6 +91,7 @@ ul li{
 .widget-00vfe-main{
   min-width: 400px;
   width: 100%;
+  background-color: #fff;
 }
 
 .widget-00vfe{
@@ -103,13 +104,8 @@ ul li{
 }
 
 .powered-link{
-  position: absolute;
-  right: 10px;
-  bottom: 0px;
-  background-color: rgba(255,255,255,1);
-  padding: 5px;
-  border:1px solid #f1f1f1;
-  box-shadow: 0px 0px 20px #ccc;
+  padding: 10px;
+  margin: 0px;
 }
 .widget-00vfe-left{
   position: relative;
@@ -175,6 +171,12 @@ ul li{
   display: block;
   width: 100%;
   text-align: center;
+}
+
+label {
+    font-weight: 600;
+    margin-top: 4px;
+    font-size: 13px;
 }
 
 .img-ac{

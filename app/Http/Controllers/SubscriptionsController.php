@@ -25,7 +25,7 @@ class SubscriptionsController extends Controller {
 		if (sizeof($plans)) {
 			return ['success' => 1, "data" => ["plans" => $plans]];
 		} else {
-			return ["success" => 0, "message" => "No any subscription list found"];
+			return ["success" => 0, "message" => "No subscription list found"];
 		}
 	}
 
@@ -51,7 +51,7 @@ class SubscriptionsController extends Controller {
 		}
 
 		if (!sizeof($details->get())) {
-			return ["success" => 0, "message" => "No any subscriptions details found"];
+			return ["success" => 0, "message" => "No subscriptions details found"];
 		}
 
 		return ["success" => 1, "total" => $total, "data" => $details->get()];
@@ -84,7 +84,7 @@ class SubscriptionsController extends Controller {
 					$subs->user = Auth::user()->id;
 					$subs->save();
 
-					return ["data" => ["amount" => $data->amount], "message" => "You have successfully subsribed to this plan", "success" => 1];
+					return ["data" => ["amount" => $data->amount], "message" => "You have successfully subscribed to this plan", "success" => 1];
 
 				} else {
 
@@ -94,7 +94,7 @@ class SubscriptionsController extends Controller {
 				return ["message" => "You have already subscribed to a plan for this month", "success" => 0];
 			}
 		} else {
-			return ["message" => "Your dont have enough balance to subscribe", "success" => 0];
+			return ["message" => "Your don't have enough balance to subscribe", "success" => 0];
 		}
 	}
 

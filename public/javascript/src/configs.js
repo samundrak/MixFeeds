@@ -1,47 +1,12 @@
 app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
         function($stateProvider, $urlRouterProvider, $httpProvider) {
-            $urlRouterProvider.otherwise("/");
+            $urlRouterProvider.otherwise("/login");
 
             $stateProvider.state("home", {
                 url: "/",
-                templateUrl: getHomePartialsTemplate('home'),
-                // controller : function($state){
-                    // $state.go('login');
-                // }
+                templateUrl: getHomePartialsTemplate('login')
             })
-                .state('contact', {
-                    url: '/contact',
-                    templateUrl: getHomePartialsTemplate('contact'),
-                    controller: function($scope) {
-                        $scope.name = 'Samundra';
-                        $scope.email = 'samundrak@yahoo.com';
-                        $scope.address = 'Kathmandu';
-                        $scope.contactMe = function() {
-                            var pass = true;
-
-                            if (!pass) return alert('Some fields are empty');
-
-                            alert('Welcome ' + $scope.name + '\n' + 'Your email ' + $scope.email + '\n' + 'You From' + $scope.address);
-                        }
-                    }
-                })
-                .state('about', {
-                    url: '/about',
-                    templateUrl: getHomePartialsTemplate('about'),
-
-                })
-                .state('content', {
-                    url: '/content',
-                    templateUrl: getHomePartialsTemplate('content'),
-                    controller: function($scope) {
-                        $scope.contents = [];
-                        $scope.addContent = function() {
-                            $scope.contents.push($scope.content);
-                            $scope.content = '';
-                        }
-                    }
-
-                })
+                
                 .state('register', {
                     url: '/register',
                     templateUrl: getHomePartialsTemplate('register'),

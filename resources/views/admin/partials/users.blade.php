@@ -17,6 +17,7 @@
 		<th>Status</th>
 		<th>Member since</th>
 		<th>Action</th>
+		<th></th>
 	</tr>
 	<tr ng-repeat="user in users">
 		<td> @{{ user.firstname}} </td>
