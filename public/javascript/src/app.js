@@ -138,6 +138,7 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     if(preview){
                         code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 100 + '%" height="' + 580 + 'px" ></iframe>';
 // >>>>>>> origin/aws2
+//have to remove code
                     }
                 }, function(error) {
                     notify($global.error.network);
