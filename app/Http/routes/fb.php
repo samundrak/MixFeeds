@@ -30,7 +30,7 @@ Route::get('/fb', function () {
 		echo 'Page Name: ' . $value['pagename'] . '<br/>';
 		echo 'Title: ' . $value['message'] . '<br/>';
 		if (array_key_exists('picture', $value)) {
-			echo 'Attachment: <img src="' . $value['picture'] . '" width="100px" height="100px"/><br/>';
+			echo 'Attachment: <img src="' . $value['picture'] . '" width="200px" height="200px"/><br/>';
 		}
 		echo '<hr/>';
 		// echo 'created_at' . $value['created_at'];

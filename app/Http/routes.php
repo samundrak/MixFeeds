@@ -28,7 +28,7 @@ function fbpp($string, $img = false) {
 function getWidthHeight($data, $props) {
 	if (property_exists($data, 'responsive')) {
 		if ($data->responsive == '1') {
-			error_log('this must be respon');
+			error_log('This must be responsive');
 			return '';
 		} else {
 			if ($props === 'width') {

@@ -15,7 +15,7 @@
 		<li class="list-group-item active">
 		<div class="row">
 		<div class="col-md-10">Widgets Details</div>
-		<div class="col-md-2"  >
+		<div class="col-md-2 text-right"  >
 		<button class="btn btn-success" ng-click="loadWidgets()" >Refresh</button>
 		</div>
 </div>
@@ -26,9 +26,9 @@
 			<label>Domain: </label> @{{ widget.domain}}
 			<br/>
 			<label>Page: </label>
-			<span ng-bind-html="widget.pages | arr2str:'link'"></span>
+			<span ng-bind-html="widget.pages | arr2str:'link'" style="display:block"></span>
 			<br/>
-			<div class="btn-group" role="group" aria-label="...">
+			<div class="btn-group margin-top-10" role="group" aria-label="...">
 				<button ui-sref="widgets.edit({id:widget.id})" type="button" class="btn btn-default">Edit</button>
 				<button type="button" ng-click="getCode(widget.id,true)" class="btn btn-default">Preview</button>
 				<button type="button" ng-click="getCode(widget.id)" class="btn btn-default">Get Code</button>
@@ -46,20 +46,30 @@
 </div>
 <div style="color:black;" class="modal fade" id="codeView" tabindex="-1" role="dialog" aria-labelledby="codeViewLabel">
 <div class="modal-dialog" role="document">
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<div class="panel panel-default">
+		<div class="panel-heading padding-10">
 			<div ng-if="!preview">
-				<h4 class="modal-title" id="codeViewLabel">Widget Code</h4>
-				<label> Copy paste the code into your website,where you want to display widget</label>
-				<textarea ng-model="code" width="auto" rows="5" class="form-control"></textarea>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
+				<h4 class="panel-title-c1" id="codeViewLabel">Widget Code</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div ng-if="preview">
+				<h4 class="panel-title-c1" id="codeViewLabel">Widget Preview</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>	
+		</div>
+		<div class="panel-body padding-10">	
+			<div ng-if="!preview">
+				<textarea ng-model="code" width="auto" rows="6" class="form-control" style="color:#999"></textarea>
+				<label style="color:#607D8B; margin-top:15px"> Copy paste the above code into your website, where you want to display the widget</label>
 			</div>
 			<div ng-if="preview">
 				<display-widget id="me" code="code"></display-widget>
 			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<div ng-if="!preview">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>	
 		</div>
 	</div>
 </div>

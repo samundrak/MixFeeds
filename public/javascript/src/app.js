@@ -106,12 +106,23 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                     var res = report.data.data;
                     var size = JSON.parse(JSON.parse(res.settings).size);
 
-                    var w = size.responsive ? '100%' : size.width;
-                    var h = size.responsive ? '100%' : size.height;
+                    var ow = size.responsive ? '100%' : size.width;
+                    var oh = size.responsive ? '560px' : size.height;
+                    if(ow=='100%')
+                    {
+                        w=ow;
+                        h=oh;
+                        var code = '<iframe style="border:0px; max-width:440px; background-color:#fff" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    }else{
+                        w=ow+110;
+                        h=oh+55;
+                        code = '<iframe style="border:0px; background-color:#fff" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    }
+                    
 
-                    var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    
                     if(preview){
-                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 550 + 'px" ></iframe>';
+                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 100 + '%" height="' + 580 + 'px" ></iframe>';
                     }
                     $scope.code = code;
                     $("#codeView").modal();
@@ -187,12 +198,23 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
                         var res = report.data.data;
                         var size = JSON.parse(JSON.parse(res.settings).size);
 
-                    var w = size.responsive ? '100%' : size.width;
-                    var h = size.responsive ? '100%' : size.height;
+                    var ow = size.responsive ? '100%' : size.width;
+                    var oh = size.responsive ? '560px' : size.height;
+                    if(ow=='100%')
+                    {
+                        w=ow;
+                        h=oh;
+                        var code = '<iframe style="border:0px; max-width:440px; background-color:#fff" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    }else{
+                        w=ow+110;
+                        h=oh+55;
+                        code = '<iframe style="border:0px; background-color:#fff" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    }
+                   
 
-                    var code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '" width="' + w + '" height="' + h + '" ></iframe>';
+                    
                     if(preview){
-                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 500 + 'px" height="' + 530 + 'px" ></iframe>';
+                        code = '<iframe style="border:0px;" src="' + window.location.origin + '/widget/' + res.token + '?preview=true" width="' + 100 + '%" height="' + 580 + 'px" ></iframe>';
                     }
                     $scope.code = code;
                     $("#codeView").modal();
@@ -413,10 +435,13 @@ var app = angular.module('static', ['ui.router', 'angular-loading-bar', 'ngAnima
 
                 $http.post('/auth/register', data).then(function(report) {
                     if (report.data.success) {
-                        notify("Thank you for Registration . We send you a verification mail on your mail id, please confirm your registration",function(){
+
+                        notify("Thank you for Registration. We send you a verification mail on your mail. Please confirm your registration within 4 hours",function(){
+                            
                             window.setTimeout(function(){
                                 window.location.href = report.data.data.path;
                             }, 2000);
+                        
                         });
                         // window.location.href = report.data.data.path;
                     } else {

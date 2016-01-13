@@ -1,9 +1,12 @@
 <div class="row">
 <form ng-submit="createWidget()">
-<ul class="list-group-item">
-	<li class="list-group-item active">
-		Create Subscriptions
-	</li>
+<div class="panel panel-primary">
+<div class="panel-heading padding-10">
+	<h3 class="panel-title-c1">Create Subscriptions</h3>
+</div>
+<div class="panel-body">
+<ul class="">
+	
 	<li class="list-group-item">
 	Subscription Name
 		<input required type="text" ng-model="create.name" class="form-control"/>
@@ -74,15 +77,31 @@
 	</li>
 	<li class="list-group-item">
 	Create Points
-		<div ng-repeat="point in create.points track by $index">
-			<input placeholder="Enter key points of this plan... @{{$index + 1}} " type="text" class="form-control" ng-model="create.points[$index]" /> <div class="btn btn-danger" ng-click="removePoints($index)"> X </div>
+		<div class="row">
+			<div ng-repeat="point in create.points track by $index">
+				<div class="clearfix margin-top-10">
+					<div class="col-lg-8 col-md-8">
+						<input placeholder="Enter key points of this plan... @{{$index + 1}} " type="text" class="form-control" ng-model="create.points[$index]" /> 
+					</div>
+					<div class="col-lg-4 col-md-4">
+						<div class="btn btn-danger" ng-click="removePoints($index)"> X </div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-12">
+				<div class="clearfix margin-top-20">
+					<div class="btn btn-primary"  ng-click="addPoints()"> + Add Points</div>
+				</div>
+			</div>
 		</div>
-		<br/>
-		<div class="btn btn-primary"  ng-click="addPoints()"> + Add Points</div>
 	</li>
-	<li class="list-group-item">
-	<input required type="submit" class="btn btn-primary" value="submit"/>
-	</li>
+	
 </ul>
+</div>
+<div class="panel-footer padding-10 text-right ">
+	<input required type="submit" class="btn btn-primary" value="SUBMIT"/>
+</div>
+</div>
 </form>
 </div>

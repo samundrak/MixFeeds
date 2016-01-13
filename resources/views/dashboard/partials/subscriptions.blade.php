@@ -11,7 +11,7 @@
 			<div class="col-md-12" ng-if="plans.message">@{{ plans.message}}</div>
 			<div ng-repeat="plan in plans.data.plans" class="col-md-4">
 				<ul class="list-item">
-					<li class="list-group-item active">@{{ plan.plan }} (@{{ plan.amount}}$/month)</li>
+					<li class="list-group-item active"><div class="panel-title-c1">@{{ plan.plan }} (@{{ plan.amount}}$/month)</div></li>
 				 	<li class="list-group-item" ng-repeat="points in plan.points"> @{{points}}</li>
 				<li class="list-group-item"><a class="btn btn-success" ng-click="subscribe(plan.plan_id)" href="javascript:void(0)">Subscribe</a></li>
 				</ul>

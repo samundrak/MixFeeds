@@ -109,14 +109,14 @@ class AuthenticateController extends Controller {
 					return Utils::response(0, "Your account has been deleted");
 				}
 				if ($code === '0') {
-					return Utils::response(0, "Your account is not verified");
+					return Utils::response(0, "Your account is not verified.");
 				}
 
-				return Utils::response(1, "Welcome", ["path" => "/dashboard/home"]);
+				return Utils::response(1, "Welcome", ["path" => "/dashboard/home#/account"]);
 			} else {
 
 				// validation not successful, send back to form
-				return Utils::response(0, "Username / password didn't matched");
+				return Utils::response(0, "Username / Password didn't matched");
 
 			}
 

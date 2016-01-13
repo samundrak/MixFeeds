@@ -8,14 +8,11 @@
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-					</button> <a class="navbar-brand" ui-href="home">{{Auth::user()->firstname}}  {{Auth::user()->lastname}}</a>
+					</button><a class="navbar-brand" ui-href="home">Welcome {{Auth::user()->firstname}}  {{Auth::user()->lastname}}</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li >
-							<a href="/dashboard/home">Home</a>
-						</li>
 						@if (Auth::user()->is_verified != 2 && Auth::user()->is_verified != 3)
 						<li ui-sref-active="active">
 							<a ui-sref="dashboard({page:'account'})">My Accounts</a>
@@ -34,10 +31,10 @@
 						</li>
 						@if(Auth::user()->is_admin === '1')
 						 <li ui-sref-active="active">
-							<a ui-sref="adminUsers">Manage Users</a>
+							<a ui-sref="adminUsers" style="color:#009688">Manage Users</a>
 						</li>
 						<li ui-sref-active="active">
-							<a ui-sref="adminSubscription">Manage Subscription</a>
+							<a ui-sref="adminSubscription" style="color:#009688">Manage Subscription</a>
 						</li>
 						{{-- <li ui-sref-active="active"> --}}
 							{{-- <a ui-sref="adminWidgets">Manage Widgets</a> --}}
@@ -62,7 +59,7 @@
 
 			</nav>
 			<div class="jumbotron">
-			<response-messages ng-if="{{Auth::user()->is_verified }} === 0" info="You are not verified user please verify your email" type="warning" ></response-messages>
+			<response-messages ng-if="{{Auth::user()->is_verified }} === 0" info="You are not a verified user please verify your email" type="warning" ></response-messages>
 			<response-messages ng-if="{{Auth::user()->is_verified }} === 2" info="You are Blocked from access of all services" type="danger" ></response-messages>
 			<response-messages ng-if="{{Auth::user()->is_verified }} === 3" info="You are Deleted" type="danger" ></response-messages>
 			{{-- <response-messages ng-if="{{Auth::user()->is_admin }} === 1" info="You are admin and can manage things more" type="info" ></response-messages> --}}

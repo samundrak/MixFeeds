@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Static Dummy Site on Laravel</title>
+<title>MultiEmbed FB Widget Maker</title>
 	<script type="text/javascript" src="{{ URL::asset('/public/javascript/lib/bower_components/jquery/dist/jquery.min.js')}}"></script>
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('/public/javascript/lib/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('/public/styles/styles.css')}}">

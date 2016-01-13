@@ -20,7 +20,7 @@ app.filter('arr2str', function() {
                 if ($rootScope.notification) delete $rootScope.notification;
                 $rootScope.$apply();
                 if(cb) cb();
-            }, 2500);
+            }, 7000);
         }
     }
 ])

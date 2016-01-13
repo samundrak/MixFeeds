@@ -9,39 +9,34 @@
 
 </script>
 <script type="text/javascript" src="{{ URL::asset('/public/javascript/src/jquery.tools.min.js')}}"></script>
+@if(getWidthHeight($data->settings->size,'width') != "")
+<div class="widget-00vfe-main" style="width:calc(100px + {{ getWidthHeight($data->settings->size,'width') }}px); height:{{ getWidthHeight($data->settings->size,'height') }}px">
+<div class="widget-00vfe" style="height:{{ getWidthHeight($data->settings->size,'height') }}px">
+@elseif(getWidthHeight($data->settings->size,'width') == "")
+<div class="widget-00vfe-main" style="max-width:440px; height:{{ getWidthHeight($data->settings->size,'height') }}px">
+<div class="widget-00vfe" style="height:{{ getWidthHeight($data->settings->size,'height') }}px">
+@endif
 
-<div class="widget-00vfe-main">
-<div class="widget-00vfe">
 	<div class="widget-00vfe-left">
 		<div class="widget-00vfe-left-top" ><a href="#" id="prev" class="prev"><img class="img-ac" src="../../../public/widget/images/top-arrow.png"></a></div>
 		<div class="widget-00vfe-container" id="container">
-
 			<div class="items">
-
 			   @foreach($data->pages as $page)
-
-
 				  	<a class="item" id="li_{{fbpp($page)}}" onClick="viewWidgets('{{fbpp($page)}}')" style="cursor:pointer" href="#">
 				  		<img class="ext-img" id="img_{{fbpp($page)}}" src="http://graph.facebook.com/v2.5/{{fbpp($page,true)}}/picture?width=200&height=200"/>
 				  	</a>
-
-
 				@endforeach
-
 			</div>
 		</div>
-
 		<div class="widget-00vfe-left-bottom"><a href="#" id="next" class="next"><img class="img-ac" src="../../../public/widget/images/bottom-arrow.png"></a></div>
 	</div>
 	<div  onmouseover="rotation('stop')" onmouseout="rotation('start')" class="widget-00vfe-right tab-content">
 		<div class="widgetHere" id="img_{{fbpp($page)}}"></div>
-
-	</div>
-	@if($data->subscription->plan != 4)
+	</div>	
+</div>
+@if($data->subscription->plan != 4)
 	<p class="powered-link" style="text-align:right; font-size:11px;">Powered by: <a style="text-decoration:underline; color:#40b622" href="#">www.MultiEmbed.com</a></p>
 	@endif
-</div>
-
 </div>
 <script type="text/javascript">
 function viewWidgets(item){
@@ -111,7 +106,6 @@ function getUrlVars()
 }(document, 'script', 'facebook-jssdk'));
 
 (function(){
-
 if(window.location.hostname != '{{ $data->domain}}'){
 	// if()
 	var query =getUrlVars();
